@@ -45,8 +45,8 @@ class Simple extends IController
     //用户注册
     function reg_act()
     {
-    	$email      = IFilter::act(IReq::get('email','post'));
-    	$username   = IFilter::act(IReq::get('username','post'));
+    	$mobile      = IFilter::act(IReq::get('mobile','post'));
+    	$mobilecode  = IFilter::act(IReq::get('mobilecode','post'));
     	$password   = IFilter::act(IReq::get('password','post'));
     	$repassword = IFilter::act(IReq::get('repassword','post'));
     	$captcha    = IFilter::act(IReq::get('captcha','post'));
@@ -54,21 +54,30 @@ class Simple extends IController
     	$message    = '';
 
     	//获取注册配置参数
-		$siteConfig = new Config('site_config');
-		$reg_option = $siteConfig->reg_option;
+	$siteConfig = new Config('site_config');
+	$reg_option = $siteConfig->reg_option;
 
-		/*注册信息校验*/
-		if($reg_option == 2)
-		{
-			$message = '当前网站禁止新用户注册';
-		}
-    	else if(IValidate::email($email) == false)
+	/*注册信息校验*/
+	$strCode = messageauthentication::validateMobileCode($mobile,$mobilecode);
+	$arrCode = json_decode($strCode,true);
+	if($arrCode['result'] == 0){
+		$boolMobileFlag = 1;
+		$strMsg = $arrCode['message'];
+	}else{
+		$boolMobileFlag = 0;
+		$strMsg = $arrCode['message'];
+	}
+	if($reg_option == 2)
+	{
+		$message = '当前网站禁止新用户注册';
+	}
+    	else if(IValidate::mobi($mobile) == false)
     	{
-    		$message = '邮箱格式不正确';
+    		$message = '手机号码格式不正确';
     	}
-    	else if(!Util::is_username($username))
+    	else if(!$boolMobileFlag)
     	{
-    		$message = '用户名必须是由2-20个字符，可以为字数，数字下划线和中文';
+    		$message = $strMsg;
     	}
     	else if(!preg_match('|\S{6,32}|',$password))
     	{
@@ -78,34 +87,36 @@ class Simple extends IController
     	{
     		$message = '2次密码输入不一致';
     	}
-    	else if($captcha != ISafe::get('captcha'))
+    	else if(0 && $captcha != ISafe::get('captcha'))
     	{
     		$message = '验证码输入不正确';
     	}
     	else
     	{
     		$userObj = new IModel('user');
-    		$where   = 'email = "'.$email.'" or username = "'.$email.'" or username = "'.$username.'"';
+    		//$where   = 'email = "'.$email.'" or username = "'.$email.'" or username = "'.$username.'"';
+		$where = "username = '".$mobile."'";
     		$userRow = $userObj->getObj($where);
 
     		if($userRow)
     		{
-    			if($email == $userRow['email'])
+			$message = "手机号已经被注册过，请重新更换";
+    			/*if($email == $userRow['email'])
     			{
     				$message = '此邮箱已经被注册过，请重新更换';
     			}
     			else
     			{
     				$message = "此用户名已经被注册过，请重新更换";
-    			}
+    			}*/
     		}
     		else
     		{
 	    		//user表
 	    		$userArray = array(
-	    			'username' => $username,
+	    			'username' => $mobile,
 	    			'password' => md5($password),
-	    			'email'    => $email,
+	    			'email'    => $mobile,
 	    		);
 	    		$userObj->setData($userArray);
 	    		$user_id = $userObj->add();
@@ -124,20 +135,20 @@ class Simple extends IController
 		    		$memberObj->add();
 
 		    		//邮箱激活帐号
-		    		if($reg_option == 1)
+		    		if(0 && $reg_option == 1)
 		    		{
 		    			$this->send_check_mail();
 		    		}
 		    		else
 		    		{
 			    		//用户私密数据
-			    		ISafe::set('username',$username);
+			    		ISafe::set('username',$mobile);
 			    		ISafe::set('user_id',$user_id);
 			    		ISafe::set('user_pwd',$userArray['password']);
 
-						//自定义跳转页面
-						$callback = $callback ? urlencode($callback) : '';
-						$this->redirect('/site/success?message='.urlencode("注册成功！").'&callback='.$callback);
+					//自定义跳转页面
+					$callback = $callback ? urlencode($callback) : '';
+					$this->redirect('/site/success?message='.urlencode("注册成功！").'&callback='.$callback);
 		    		}
 	    		}
 	    		else
@@ -147,11 +158,11 @@ class Simple extends IController
 	    	}
     	}
 
-		//出错信息展示
+	//出错信息展示
     	if($message)
     	{
-    		$this->email    = $email;
-    		$this->username = $username;
+    		//$this->email    = $email;
+    		$this->username = $mobile;
 
     		$this->redirect('reg',false);
     		Util::showMessage($message);
@@ -196,7 +207,7 @@ class Simple extends IController
 				}
 
 				//自定义跳转页面
-				if($callback && !strpos($callback,'reg') && !strpos($callback,'login'))
+				if(0 && $callback && !strpos($callback,'reg') && !strpos($callback,'login'))
 				{
 					$this->redirect($callback);
 				}
