@@ -37,7 +37,7 @@
             <!-- <span class="get-more"><a href="{url:site/groupon}">查看更多>></a></span> -->
             <!-- <p class="split"></p> -->
         </div>
-        {query:name=promotion as p join=left join goods as go on go.id eq p.condition fields=p.end_time,go.img as img,p.name as name,p.award_value as award_value,go.market_price as market_price,go.id as goods_id,p.id as p_id,end_time, p.intro where=p.type eq 1 and p.is_close eq 0 and go.is_del eq 0 and NOW() between start_time and end_time AND go.id is not null limit=10}
+        {query:name=promotion as p join=left join goods as go on go.id eq p.condition fields=p.end_time,p.name as name,p.award_value as award_value,go.market_price as market_price,go.id as goods_id,p.id as p_id,end_time, p.intro, p.img where=p.type eq 1 and p.is_close eq 0 and go.is_del eq 0 and NOW() between start_time and end_time AND go.id is not null limit=10}
             {set:$countNumsItem[]=$item['p_id'];}{set:$free_time=ITime::getDiffSec($item['end_time'])}
             {set:$tmpGoodsId=$item['goods_id'];$tmpPId=$item['p_id'];set:$discount=round($item['award_value']/$item['market_price'],1)}
             <div class="content-wrap">
