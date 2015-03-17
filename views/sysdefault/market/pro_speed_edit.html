@@ -49,6 +49,7 @@
 							<col width="100px" />
 							<col width="200px" />
 							<col />
+							<input type='hidden' name='goods_id' />
 							<input type='hidden' name='condition' />
 							<thead>
 								<tr>
@@ -106,10 +107,11 @@
 		if(content)
 		{
 			$('[name="condition"]').val(content['data']['id']);
+			$('[name="goods_id"]').val(content['data']['id']);
 			var imgUrl = "{webroot:@url@}";
 			imgUrl     = imgUrl.replace("@url@",content['data']['img']);
 
-			var html =   '<td><img src="'+imgUrl+'" title="'+content['data']['name']+'" style="max-width:140px;" /></td>'
+			var html =   '<td><img src="'+imgUrl+'" title="'+content['data']['name']+'" style="max-width:140px;" /><br /><input type="file" class="file" name="img" /></td>'
 						+'<td>'+content['data']['name']+'</td>'
 						+'<td>'+content['data']['sell_price']+'</td>'
 						+'<td><input text="text" class="small" name="award_value" pattern="float" alt="请填写一个数字" />元 </td>';
