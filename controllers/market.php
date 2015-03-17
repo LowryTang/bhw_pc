@@ -550,6 +550,7 @@ class Market extends IController
 	function pro_speed_edit_act()
 	{
 		$id = IReq::get('id');
+		$goodsId = IFilter::act(IReq::get('goods_id'),'int');
 
 		$condition    = IReq::get('condition','post');
 		$award_value  = IReq::get('award_value','post');
@@ -581,7 +582,21 @@ class Market extends IController
 			'type'       => 1,
 			'award_type' => 0,
 			'user_group' => $user_group_str,
+			'goods_id'   => $goodsId,
 		);
+		if($goodsId){
+			$goodsObj = new IModel('goods');
+			$where    = 'id = '.$goodsId;
+			$goodsRow = $goodsObj->getObj($where);
+			
+			if(isset($_FILES['img']['name']) && $_FILES['img']['name'] != ''){
+				$uploadObj = new PhotoUpload();
+				$photoInfo = $uploadObj->run();
+				$dataArray['img'] = $photoInfo['img']['img'];
+			}else{
+				$dataArray['img'] = $goodsRow['img'];
+			}
+		}
 
 		if(!$condition || !$award_value)
 		{
