@@ -321,6 +321,24 @@ class Site extends IController
 			$this->redirect('article_detail');
 		}
 	}
+	
+	//商品抢购
+	function promotion(){
+		$id = IFilter::act(IReq::get('id'),'int');
+		$now = ITime::getDateTime();
+		$tb_promotion = new IQuery('promotion as p');
+		$tb_promotion->fields = 'p.id AS promotion_id,p.img AS promotion_img,p.name AS promotion_name,p.start_time,p.end_time,p.condition,p.award_value,p.award_type,p.is_close,p.user_group,p.type,g.* ';
+		$tb_promotion->join = 'left join goods as g on g.id=p.goods_id ';
+		if(empty($id) || $id == 0){
+			$tb_promotion->where = " p.start_time<= '{$now}' AND p.end_time>= '{$now}' AND p.is_close=0 ORDER BY promotion_id DESC ";
+		}else{
+			$tb_promotion->where = " p.id = {$id} ";
+		}
+		$promotion_list = $tb_promotion->find();
+		$this->promotion_list = $promotion_list;
+		$this->redirect("promotion");
+	}
+
 
 	//商品展示
 	function products()
