@@ -944,3 +944,83 @@ a.reg_btn{display:block;width:159px;margin:10px 0 0;background-position:0 -210px
 .slide_button{position:absolute;bottom:0px;left:0px;right:0px;height:30px;overflow:hidden;width:100%;background:#fff;}
 	.slide_button a{display:block;height:30px;line-height:30px;color:#333;float:left;background:#dddddd;}
 	.slide_button a.current,#slide_name a:hover{background:#a8a8a8;color:#fff; font-weight:bold}
+/* promotion style start */
+.promotion .main{width:773px}
+.promotion .sidebar{width:180px}
+.promotion .box,.promotion .shadow_box{position:relative;border:1px #c6c6c6 solid;text-align:left}
+.promotion .shadow_box{margin-top:-1px;border-width:1px 0 0 1px;background:url(../images/front/shadow_b.gif) 0 bottom repeat-x}
+	.promotion .cont{padding:20px 22px 30px 11px}
+	.promotion .shadow_box .cont{background:url(../images/front/shadow_r.gif) right 0 repeat-y}
+	.promotion span.l,.promotion span.r,.promotion span.b_l,.promotion span.b_r{ position:absolute;display:block;width:4px;height:4px;background:url(../images/front/circle.gif) no-repeat;overflow:hidden}
+	.promotion .shadow_box span.r,.promotion .shadow_box span.b_l,.promotion .shadow_box span.b_r{width:7px;height:8px;overflow:hidden}
+	.promotion span.l{top:-1px;left:-1px}
+	.promotion span.r{top:-1px;right:-1px;background-position:-3px 0}
+	.promotion .org_box span.l{background-position:-30px 0}
+	.promotion .org_box span.r{background-position:-33px 0}
+	.promotion .org_box span.b_l{background-position:-30px -3px}
+	.promotion .org_box span.b_r{background-position:-33px -3px}
+	.promotion span.b_l{bottom:-1px;left:-1px;background-position:0 -3px}
+	.promotion span.b_r{bottom:-1px;right:-1px;background-position:-3px -3px}
+	.promotion .shadow_box span.b_l{bottom:0;background-position:-7px 0}
+	.promotion .shadow_box span.r{width:8px;right:0;background-position:-21px 0}
+	.promotion .shadow_box span.b_r{right:0;bottom:0;background-position:-14px 0}
+	/* grounpon_title style start */
+	.gt_box{height:39px;}
+	.grounpon_title{float:left;display:inline-block;height:30px;margin-left:9px;padding:7px 13px 0;background:url(../images/front/promotion_bg.gif) 45px 8px no-repeat}
+		.grounpon_title strong{ font:normal 24px  Arial, Helvetica, sans-serif;color:#f76b1f}
+			.grounpon_title strong span{visibility:hidden}
+	/* grounpon_title style end */
+.promotion .g_title,.promotion .g_price .price_tag,.promotion .g_digest,.g_btn,.g_btn_2,.g_price .disabled,.g_notice h3,.promotion .sidebar .title span,.promotion .gtitle h2,.promotion .gtitle a.return{background-image:url(../images/front/promotion_bg.gif);background-repeat:no-repeat}
+.promotion .g_title{margin-bottom:38px;padding:0 16px 0 80px;font:bold 22px/30px "黑体", Arial,Helvetica,sans-serif;color:#222;background-position:-205px -289px}
+.promotion .l_part{float:left;width:231px}
+.promotion .r_part{float:right;width:490px}
+.promotion .g_price{position:relative;height:125px;background:#ececec}
+	.promotion .g_price .price_tag{position:absolute;top:4px;left:-19px;z-index:1;display:block;width:240px;height:114px;overflow:hidden;color:#fff;background-position:0 -32px}
+	.promotion .g_price .disabled{background-position:0 -146px}
+		.promotion .g_price .disabled a{cursor:default;outline:none}
+		.promotion .g_price .price_tag p{float:left;width:120px;height:107px;margin-left:5px;padding:18px 0 0 10px;text-align:center;font-weight:bold;font-size:14px}
+		.promotion .g_price .price_tag strong{display:block;padding:3px 15px 0 20px;font:normal 38px/42px Helvetica,arial,sans-serif}
+		.promotion .g_price a.buy{display:block;float:right;width:105px;_width:100px;height:50px;margin-top:33px;line-height:120px;overflow:hidden}
+.promotion .g_pic{margin:5px 0 0 5px;text-align:center}
+.promotion .g_digest{margin:5px;padding:16px 14px 0 45px;border-top:1px solid #c5c5c5;text-align:left;line-height:25px;color:#4f4f4f;background-position:-263px 11px}
+	a.g_btn,a.g_btn_2{display:block;width:122px;height:28px;color:#fff;padding-top:4px;text-align:center;font-weight:bold;font-size:14px;text-decoration:underline;background-position:0 -265px}
+	a.g_btn_2{width:83px;height:26px;font-size:12px;text-decoration:none;background-position:-123px -265px}
+.promotion .orange_box{padding:5px;color:#414141;border:1px solid #ee8a00;background-color:#fff7c4}
+	.promotion .orange_box p,.shadow_box .orange_box p span{padding:0 10px}
+	.promotion .orange_box p img{ position:absolute;top:0;left:0;vertical-align:middle;_margin-left:-30px}
+	.promotion .orange_box p.g_success{position:relative;margin:0 18px;padding:3px 0 0 28px}
+.promotion .g_num{border-top:none}
+.promotion .dot_box{padding:8px 0;border-top:1px dashed #d4d4d4;border-bottom:1px dashed #d4d4d4}
+.g_notice{padding:28px}
+	.g_notice h3{height:30px;padding:2px 0 0 35px;color:#cf1e3b;background-position:-170px -328px}
+	.g_notice p{margin:0 0 15px;padding:0 28px;color:#666}
+	.promotion .sidebar .box .title{position:relative;height:37px;line-height:37px;padding-left:10px;border-bottom:1px solid #dedede;color:#353535;background-image:none}
+		.promotion .sidebar .box .title span{ position:absolute;display:block;left:15px;bottom:-8px;width:13px;height:8px;background-position:-206px -265px;_bottom:-15px}
+		.promotion .sidebar .box .cont{padding:8px 5px 0 5px;color:#6a6a6a}
+	.promotion .sidebar .org_box{border:1px solid #ffc399;background-color:#fefced}
+		.promotion .sidebar .org_box .title{border-bottom:1px solid #ffc399;background-color:#fdf1d7}
+			.promotion .sidebar .org_box .title span{background-position:-219px -265px}
+		.promotion .sidebar .orange .cont{padding:12px 0 0 13px}
+.promotion .gray_m{width:160px;height:20px;margin:4px 0 0}
+.promotion label.btn_orange{ background-position:0 -361px}
+	.promotion label.btn_orange input{height:26px;background-position:right -361px}
+.promotion ul.prolist li{width:400px;height:auto;margin:0;padding:20px 40px;border-top:none;text-align:left;border-bottom:1px solid #e3e3e3;text-align:center}
+.promotion .sidebar ul.prolist li{width:100%;min-height:275px;margin:9px auto 0;padding:0 0 3px}
+.promotion .sidebar ul.prolist li{width:100%;min-height:275px;height:auto;margin:9px auto 0;padding-bottom:3px;border-top:none;border-bottom:1px solid #e3e3e3;text-align:center}
+	.promotion .sidebar ul.prolist li img{border:1px solid #dedede}
+	.promotion .sidebar ul.prolist li p{padding:0 0 1px 12px;text-align:left;font-family:arial,helvetica,sans-serif}
+	.promotion .sidebar ul.prolist .pro_title{min-height:18px;height:auto;line-height:18px;margin-top:5px}
+	.promotion .sidebar ul.prolist li p s{color:#424242}
+	.promotion .sidebar ul.prolist li.more{min-height:25px;border:none;text-align:right}
+	.promotion .sidebar span.l{_top:0}
+	.promotion .sidebar span.r{_top:0;_right:0}
+	.promotion .sidebar span.b_l,.promotion .sidebar span.b_r{_display:none}
+.promotion .gtitle{height:33px;text-align:right;border-bottom:1px solid #f76f11}
+	.promotion .gtitle h2{ float:left;width:94px;height:33px;margin-left:8px;text-align:center;background-color:#f76f11;background-position:0 -297px;line-height:100px;overflow:hidden}
+	.promotion .gtitle a.return{ display:inline-block;width:104px;height:17px;margin-top:12px;line-height:100px;overflow:hidden;background-position:0 -333px}
+.promotion .glist li{float:left;width:380px;height:240px;border-bottom:1px solid #e2e2e2;padding:20px 40px 10px;text-align:left}
+	.promotion .glist li h2{ height:40px;line-height:20px}
+	.promotion .glist li h2 a{color:#454545}
+	.promotion .glist li dl dt{float:left;width:180px}
+		.promotion .glist li dl dt img{border:1px solid #dedede}
+	.promotion .glist li dl dd{float:right;width:170px;margin-left:15px}
