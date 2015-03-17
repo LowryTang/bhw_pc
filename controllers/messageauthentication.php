@@ -41,7 +41,7 @@ class Messageauthentication extends IController{
 	* @brief 初始化，验证权限
 	*/
 	public function init(){
-		IInterceptor::reg('CheckRights@onCreateAction');
+		//IInterceptor::reg('CheckRights@onCreateAction');
 	}
 	
 	/*
