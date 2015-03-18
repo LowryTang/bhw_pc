@@ -1,8 +1,7 @@
 
-runtime
-upload
+runtime/*
+upload/*
 backup
-install
 logs/
-
+install/install.lock
 config/config.php
