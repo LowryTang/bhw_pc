@@ -102,14 +102,16 @@
 	}
 
 	//关联商品回调处理函数
-	function relationCallBack(content)
+	function relationCallBack(content,regimentImg)
 	{
 		if(content)
 		{
 			$('[name="condition"]').val(content['data']['id']);
 			$('[name="goods_id"]').val(content['data']['id']);
+			regimentImg = !regimentImg ? content['data']['img'] : regimentImg;
+
 			var imgUrl = "{webroot:@url@}";
-			imgUrl     = imgUrl.replace("@url@",content['data']['img']);
+			imgUrl     = imgUrl.replace("@url@",regimentImg);
 
 			var html =   '<td><img src="'+imgUrl+'" title="'+content['data']['name']+'" style="max-width:140px;" /><br /><input type="file" class="file" name="img" /></td>'
 						+'<td>'+content['data']['name']+'</td>'
@@ -145,11 +147,11 @@
 	}
 
 	//预定义商品绑定
-	relationCallBack({$this->promotionRow['goodsRow']});
+	relationCallBack({$this->promotionRow['goodsRow']},"{$this->promotionRow['img']}");
 
 	//表单回填
 	var formObj = new Form('pro_edit');
-	formObj.init
+	/*formObj.init
 	({
 		'id':'{$this->promotionRow['id']}',
 		'name':'{$this->promotionRow['name']}',
@@ -159,5 +161,6 @@
 		'is_close':'{$this->promotionRow['is_close']}',
 		'condition':'{$this->promotionRow['condition']}',
 		'award_value':'{$this->promotionRow['award_value']}'
-	});
+	});*/
+	formObj.init({echo:JSON::encode($this->promotionRow)});
 </script>
