@@ -147,8 +147,9 @@
 	}
 
 	//预定义商品绑定
+	{if:isset($this->regimentRow['goodsRow'])}
 	relationCallBack({$this->promotionRow['goodsRow']},"{$this->promotionRow['img']}");
-
+	{/if}
 	//表单回填
 	var formObj = new Form('pro_edit');
 	/*formObj.init
