@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2014 aircheng
+ * @copyright (c) 2014 baihuawei
  * @file report.php
  * @brief 导出excel类库
  * @author dabao

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2014 www.aircheng.com
+ * @copyright (c) 2014 www.baihuawei.com
  * @file CheckRight.php
  * @brief 权限校验类,包括admin(管理员),seller(商家),user(注册用户)
  * @author chendeshan

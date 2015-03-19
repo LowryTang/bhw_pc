@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2014 aircheng.com
+ * @copyright (c) 2014 baihuawei.com
  * @file mysqli_class.php
  * @brief mysqli数据库应用
  * @author nswe

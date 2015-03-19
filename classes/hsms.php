@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2011 aircheng.com
+ * @copyright (c) 2011 baihuawei.com
  * @file hsms.php
  * @brief 短信发送接口
  * @author chendeshan

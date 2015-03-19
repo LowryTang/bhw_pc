@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2014 aircheng
+ * @copyright (c) 2014 baihuawei
  * @file themeroute.php
  * @brief 视图布局选择路由类
  * @author nswe

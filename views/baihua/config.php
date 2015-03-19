@@ -4,7 +4,7 @@ return array(
 	'author'  => 'Lowry',
 	'time'    => '2015-01-01',
 	'version' => '1.0',
-	'thumb'   => 'preview.jpg',
+	'thumb'   => '',
 	'info'    => '',
 );
 ?>

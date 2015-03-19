@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2014 aircheng.com
+ * @copyright Copyright(c) 2014 baihuawei.com
  * @file sendgoods_alipay.php
  * @brief 支付宝发货接口
  * @author chendeshan

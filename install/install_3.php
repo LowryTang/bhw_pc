@@ -105,7 +105,7 @@
 		</div>
 		<span class="l"></span><span class="r"></span><span class="b_l"></span><span class="b_r"></span>
 	</div>
-	<div class="foot"><a href="http://www.aircheng.com">关于我们</a>|<a href="http://www.aircheng.com">官方网站</a>|<a href="http://www.aircheng.com">联系我们</a>|<a href="">©2005-2014</a></div>
+	<div class="foot"><a href="http://www.baihuawei.com">关于我们</a>|<a href="http://www.baihuawei.com">官方网站</a>|<a href="http://www.baihuawei.com">联系我们</a>|<a href="">©2005-2014</a></div>
 </div>
 
 <iframe name='install_iframe' style='width:0px;height:0px;display:none' src='#'></iframe>

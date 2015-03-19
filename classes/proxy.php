@@ -10,7 +10,7 @@
 class Proxy
 {
 	//升级URL
-	const UPDATE_URL = 'http://product.aircheng.com/index.php?';
+	const UPDATE_URL = 'http://product.baihuawei.com/index.php?';
 
 	/**
 	 * 与远程服务器发送数据

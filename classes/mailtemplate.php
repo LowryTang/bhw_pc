@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2014 aircheng.com
+ * @copyright (c) 2014 baihuawei.com
  * @file sendmail.php
  * @brief 邮件数据模板
  * @author chendeshan

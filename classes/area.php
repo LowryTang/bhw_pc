@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2014 aircheng.com
+ * @copyright Copyright(c) 2014 baihuawei.com
  * @file area.php
  * @brief 省市地区调用函数
  * @author nswe

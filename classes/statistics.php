@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2014 aircheng
+ * @copyright (c) 2014 baihuawei
  * @file statistics.php
  * @brief 统计分析类库
  * @author nswe

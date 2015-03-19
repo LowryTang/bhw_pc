@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2014 aircheng.com
+ * @copyright (c) 2014 baihuawei.com
  * @file other.php
  * @brief 其他api方法
  * @author chendeshan

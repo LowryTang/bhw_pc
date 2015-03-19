@@ -19,7 +19,7 @@
 					<th>排序：</th><td><input class="normal" name="sort" type="text" value="{$brand['sort']}" pattern='int' empty alt='必需为整形数值'/></td>
 				</tr>
 				<tr>
-					<th>网址：</th><td><input class="normal" name="url" type="text" value="{$brand['url']}" pattern='url' empty alt='网址格式不正确，比如：http://www.jooyea.cn' /><label>完整的URL链接地址，如：http://www.jooyea.cn</label></td>
+					<th>网址：</th><td><input class="normal" name="url" type="text" value="{$brand['url']}" pattern='url' empty alt='网址格式不正确' /><label>完整的URL链接地址</label></td>
 				</tr>
 				<tr>
 					<th>LOGO：</th><td><div>{if:isset($brand['logo'])}<img src="{webroot:$brand[logo]}" height="60px"/><br />{/if}<input type='file' class='normal' name='logo'/></div></td>

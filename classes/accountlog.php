@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2015 www.aircheng.com
+ * @copyright (c) 2015 www.baihuawei.com
  * @file accountlog.php
  * @brief 账户日志管理
  * @author nswe

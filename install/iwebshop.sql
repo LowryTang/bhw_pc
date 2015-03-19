@@ -1577,12 +1577,12 @@ INSERT INTO `{pre}ad_position` VALUES (10, '文章-公告内容页左册', 0, 0,
 --
 -- 导出表中的数据 `{pre}ad_manage`
 --
-INSERT INTO `{pre}ad_manage` VALUES (16, '首页左上方广告', 1, 5, 'http://www.aircheng.com', 99, 0, 0, '2014-05-01', '2020-08-05', 'upload/2011/06/07/20110607105359556.png', '首页左上方广告',0);
-INSERT INTO `{pre}ad_manage` VALUES (23, '首页中部通栏广告', 1, 6, 'http://www.aircheng.com', 99, 0, 0, '2014-05-03', '2020-06-11', 'upload/2011/06/07/20110607105518688.png', '首页中部通栏广告',0);
-INSERT INTO `{pre}ad_manage` VALUES (18, '首页右上方', 1, 7, 'http://www.aircheng.com', 99, 0, 0, '2014-05-02', '2020-06-30', 'upload/2011/06/07/20110607105608864.png', '首页右上方',0);
-INSERT INTO `{pre}ad_manage` VALUES (19, '商品搜索结果页198*120', 1, 8, 'http://www.aircheng.com', 99, 198, 120, '2014-05-05', '2020-06-10', 'upload/2011/06/07/20110607105655941.png', '1',0);
-INSERT INTO `{pre}ad_manage` VALUES (22, '文章公告内容页左侧', 1, 10, 'http://www.aircheng.com', 99, 0, 0, '2014-05-02', '2020-12-10', 'upload/2011/06/07/20110607105620728.png', '1',0);
-INSERT INTO `{pre}ad_manage` VALUES (24, '首页中部通栏广告', 1, 6, 'http://www.aircheng.com', 99, 0, 0, '2014-05-03', '2020-06-11', 'upload/2011/06/07/20110607105547573.png', '首页中部通栏广告',0);
+INSERT INTO `{pre}ad_manage` VALUES (16, '首页左上方广告', 1, 5, 'http://www.baihuawei.com', 99, 0, 0, '2014-05-01', '2020-08-05', 'upload/2011/06/07/20110607105359556.png', '首页左上方广告',0);
+INSERT INTO `{pre}ad_manage` VALUES (23, '首页中部通栏广告', 1, 6, 'http://www.baihuawei.com', 99, 0, 0, '2014-05-03', '2020-06-11', 'upload/2011/06/07/20110607105518688.png', '首页中部通栏广告',0);
+INSERT INTO `{pre}ad_manage` VALUES (18, '首页右上方', 1, 7, 'http://www.baihuawei.com', 99, 0, 0, '2014-05-02', '2020-06-30', 'upload/2011/06/07/20110607105608864.png', '首页右上方',0);
+INSERT INTO `{pre}ad_manage` VALUES (19, '商品搜索结果页198*120', 1, 8, 'http://www.baihuawei.com', 99, 198, 120, '2014-05-05', '2020-06-10', 'upload/2011/06/07/20110607105655941.png', '1',0);
+INSERT INTO `{pre}ad_manage` VALUES (22, '文章公告内容页左侧', 1, 10, 'http://www.baihuawei.com', 99, 0, 0, '2014-05-02', '2020-12-10', 'upload/2011/06/07/20110607105620728.png', '1',0);
+INSERT INTO `{pre}ad_manage` VALUES (24, '首页中部通栏广告', 1, 6, 'http://www.baihuawei.com', 99, 0, 0, '2014-05-03', '2020-06-11', 'upload/2011/06/07/20110607105547573.png', '首页中部通栏广告',0);
 
 --
 -- 导出表中的数据 `{pre}areas`

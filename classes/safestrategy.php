@@ -34,7 +34,7 @@ class safeStrategy
 		$return = Proxy::getAuthorize();
 		if($return == false)
 		{
-			$this->safeInfo[] = array('content' => '您使用的软件未进行商业授权，请尽快购买！<a href="http://www.aircheng.com/buy" target="_blank">点击授权</a>');
+			$this->safeInfo[] = array('content' => '您使用的软件未进行商业授权，请尽快购买！<a href="http://www.baihuawei.com/buy" target="_blank">点击授权</a>');
 		}
 	}
 

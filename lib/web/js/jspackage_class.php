@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2010 aircheng.com
+ * @copyright Copyright(c) 2010 baihuawei.com
  * @file jspackage_class.php
  * @brief 系统JS包加载类文件
  * @author nswe

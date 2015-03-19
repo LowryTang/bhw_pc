@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2010 aircheng.com
+ * @copyright Copyright(c) 2010 baihuawei.com
  * @file application.php
  * @brief 应用的基本类文件
  * @author nswe

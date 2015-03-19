@@ -589,7 +589,10 @@ class Market extends IController
 			$where    = 'id = '.$goodsId;
 			$goodsRow = $goodsObj->getObj($where);
 			
+							var_dump($_FILES['img']);
+				die();
 			if(isset($_FILES['img']['name']) && $_FILES['img']['name'] != ''){
+
 				$uploadObj = new PhotoUpload();
 				$photoInfo = $uploadObj->run();
 				$dataArray['img'] = $photoInfo['img']['img'];
@@ -701,6 +704,8 @@ class Market extends IController
 			$goodsRow = $goodsObj->getObj($where);
 
 			//处理上传图片
+										var_dump($_FILES['img']);
+				die();
 			if(isset($_FILES['img']['name']) && $_FILES['img']['name'] != '')
 			{
 				$uploadObj = new PhotoUpload();

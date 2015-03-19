@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2014 aircheng.com
+ * @copyright Copyright(c) 2014 baihuawei.com
  * @file offline.php
  * @brief 线下支付
  * @author nswe

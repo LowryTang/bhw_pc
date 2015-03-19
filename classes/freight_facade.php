@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2014 aircheng.com
+ * @copyright Copyright(c) 2014 baihuawei.com
  * @file freight_facade.php
  * @author nswe
  * @date 2014/4/18 16:22:33
