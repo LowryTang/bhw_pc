@@ -35,7 +35,7 @@
   'viewPath' => 'views',
   'skinPath' => 'skin',
   'classes' => 'classes.*',
-  'rewriteRule' => 'pathinfo',
+  'rewriteRule' => 'url',
   'theme' => 
   array (
     'pc' => 'baihua',
