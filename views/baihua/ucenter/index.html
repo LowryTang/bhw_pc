@@ -1,9 +1,9 @@
 {set:$user_id = $this->user['user_id']}
-{query:name=member where=user_id eq $user_id item=$user}{/query}
-{query:name=order fields=sum(order_amount) as amount,count(id) as num where=user_id eq $user_id and pay_status eq 1 item=$statistics}{/query}
+{set:$user = Api::run('getMemberInfo',$user_id)}
+{set:$statistics = Api::run('getMemberTongJi',$user_id)}
 {set:$msgObj = new Mess($user_id);$msgNum = $msgObj->needReadNum()}
 {set:$propIds = trim($user['prop'],',');$propIds = $propIds ? $propIds : 0}
-{query:fields=count(id) as prop_num name=prop where= id in ($propIds) and type eq 0 item=$propData}{/query}
+{set:$propData = Api::run('getPropTongJi',$propIds)}
 
 <div class="main f_r">
     {if:$msgNum>0}
@@ -40,9 +40,9 @@
 			</table>
 
 			<div class="stat">
-				<span>待评价商品：<label>(<b class="red2">{echo:Common::countUserWaitComment($user_id)}</b>)</label></span>
-				<span>待付款订单：<label>(<b class="red2">{echo:Common::countUserWaitPay($user_id)}</b>)</label></span>
-				<span>待确认收货：<label>(<b class="red2"><a href="{url:/ucenter/order}">{echo:Common::countUserWaitCommit($user_id)}</b>)</a></label></span>
+				<span>待评价商品：<label>(<b><a class="red2" href="{url:/ucenter/evaluation}">{echo:statistics::countUserWaitComment($user_id)}</a></b>)</label></span>
+				<span>待付款订单：<label>(<b><a class="red2" href="{url:/ucenter/order}">{echo:statistics::countUserWaitPay($user_id)}</a></b>)</label></span>
+				<span>待确认收货：<label>(<b><a class="red2" href="{url:/ucenter/order}">{echo:statistics::countUserWaitCommit($user_id)}</a></b>)</label></span>
 			</div>
 			</dd>
 		</dl>

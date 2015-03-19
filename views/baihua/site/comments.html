@@ -1,11 +1,11 @@
 {set:$average_point=$this->comment_info['average_point'];}
 {set:$goods_id=$this->comment['goods_id'];}
 {set:$id=intval(IReq::get('id'));}
-{query: name=goods where=id eq $goods_id limit=1}{/query}
+{set:$item=Api::run('getGoodsInfo',$goods_id)}
 
 <div class="position"> <span>您当前的位置：</span> <a href="{url:}"> 首页</a> » <a href="{url:/site/products/id/$goods_id}">{$item['name']}</a> </div>
-<div class="clearfix">
-	<div class="sidebar f_l">
+<div class="position clearfix">
+	<div class="sidebar f_l" style="width:200px">
 		<div class="box_2 m_10">
 			<div class="title">商品信息</div>
 			<div class="content">
@@ -17,7 +17,7 @@
 						<p>评价得分：<span class="grade"><i style="width:{echo:Common::gradeWidth($average_point)}px"></i></span>({$average_point}分)</p>
 						<p>评论数：{$this->comment_info['comment_total']}条</p>
 					</li>
-					<input type="submit" onclick="joinCart_list({$goods_id});" value="加入购物车" class="submit_join m_10">
+					<input type="submit" onclick="joinCart_list({$goods_id});" value="加入购物车" class="submit_join join_style m_10">
 					<div class="msgbox" style="width:350px;display:none">
 						<div class="msg_t"><a class="close f_r" onclick="$(this).parents('.msgbox').hide();">关闭</a>请选择规格</div>
 						<div class="msg_c" id='product_box_{$goods_id}'></div>

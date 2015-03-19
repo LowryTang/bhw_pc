@@ -172,7 +172,7 @@ ul.list{padding:6px 6px 4px}
 ul.prolist li{float:left;display:inline;width:175px;height:238px;margin:10px 1px 10px 9px;text-align:left}
 	ul.prolist li.h{width:180px;height:329px;margin:10px 6px 10px 9px}
 	ul.prolist li.s{width:121px;height:168px;margin:10px 6px 10px 9px}
-	ul.prolist li .pro_title{margin-top:8px;height:18px;overflow:hidden}
+	ul.prolist li .pro_title{margin-top:8px;height:20px;overflow:hidden;line-height: 20px;}
 	ul.prolist li .integral{color:#464646}
 		ul.prolist li b,div.prolist dl dd b,.hot ul.prolist li b,ul.ranklist li.current em,ul.ranklist li.current b,.container_2 .box ul.ranklist li.current b,.cart_stats dd span b{color:#f52648;font:bold 14px "宋体"}
 		ul.prolist li s,ul.prolist li span{color:#999;font-family:Times, serif}
@@ -192,7 +192,7 @@ ul.prolist li{float:left;display:inline;width:175px;height:238px;margin:10px 1px
 	.brown_box ul.prolist li b{font:normal 12px Arial, Helvetica, sans-serif}
 	.brown_box ul.prolist .pro_title{height:54px;line-height:18px;}
 		.brown_box ul.prolist .pro_title span{ display:block}
-.box_2 ul.prolist{background-color:#fff;overflow:hidden;padding:0 3px}
+.box_2 ul.prolist{background-color:#fff;overflow:hidden;padding:0 3px;text-align:center;}
 	.box_2 ul.prolist li{min-height:90px;height:auto;color:#4f4f4f}
 		.box_2 ul.prolist li p{margin:5px 0}
 .parts ul.prolist li{width:100px;height:190px;margin:0 12px;text-align:center;_overflow:hidden}
@@ -258,13 +258,13 @@ textarea{width:465px;height:65px;padding:0 0 0 5px;font-size:12px;color:#333;bor
 .submit_buy{width:169px;background:#ed145b;border-radius:5px; height:44px;border:none; color:#fff; font-size:20px; font-family:"微软雅黑"; overflow:hidden;cursor:pointer;}
 .submit_buy:hover{ background:#fb6aae;}
 .submit_join{width:158px;height:40px;background-position:0 -126px}
+.submit_join.join_style{background: #fb6aae;border-radius: 5px; color: #fff;font-size:15px;cursor: pointer;}
 .submit_login{width:117px;background-position:0 -166px}
 .submit_reg{width:205px;background-position:0 -254px}
 .submit_order{width:191px;background-position:0 -433px}
 .submit_pay{width:148px;background-position:0 -477px;margin:30px 0}
 .submit_cancel{width:107px;height:34px;background-position:0 -521px}
 .shop_cart .submit_join{width:169px;background:#fb6aae;border-radius:5px; height:44px;border:none; color:#fff; font-size:20px; font-family:"微软雅黑"; overflow:hidden;cursor:pointer;}
-.submit_join:hover{ background:#f09;}
 
 
 .next_step{display:block;width:159px;background-position:0 -643px;}
@@ -294,8 +294,8 @@ a.btn_pay{display:inline-block;width:119px;height:37px;margin-right:20px;backgro
 	.dotted_table td{border-right:none}
 /* border table style start */
 /* list table style start */
-.list_table{ border-collapse:collapse;text-align:center;word-break:break-all;table-layout:fixed;word-wrap:break-word;}
-	.list_table thead tr{border:1px solid #ffc8a1;}
+.list_table{ border-collapse:collapse;text-align:center;word-break:break-all;table-layout:fixed;word-wrap:break-word;font-size:13px;}
+	.list_table thead tr{border:1px solid #ffc8a1; }
 	.list_table td{padding:10px 5px;line-height:18px;border-bottom:1px solid #e5e5e5}
 	.list_table th{padding-left:2px;height:32px;border-bottom:1px solid #c5c5c5;font-weight:bold;color:3333;background:url(../images/front/ucenter/list_table_thbg.gif) repeat-x}
 	.list_table thead th{border-top:1px solid #ffc8a1;border-bottom:1px solid #ffc8a1;color:#545454;background:url(../images/front/ucenter/list_table_thbg.gif) 0 -33px repeat-x}
@@ -378,21 +378,21 @@ a.btn_pay{display:inline-block;width:119px;height:37px;margin-right:20px;backgro
 	.prompt_3 p{line-height:25px}
 /* prompt style end */
 /* uc_title style start */
-.uc_title,.uc_title label,.uc_title label span{/*background:#FFFFFF*/}
-.uc_title{height:32px;background:url(../images/front/ucenter/uc_titlebg.gif) repeat-x}
-	.uc_title label{display:inline-block;float:left;margin:1px 3px 0 0;padding-left:15px;background-position:0 -88px;cursor:pointer;border-radius: 4px 4px 0 0;}
-		.uc_title label span{display:inline-block;height:21px;padding:5px 10px 0 0;overflow:hidden;color:#777777;background-position:right -115px;background-image:url(../images/front/ucenter/uc_titlebg.gif)}
+.uc_title,.uc_title label,.uc_title label span{background:url(../images/front/ucenter/uc_titlebg.gif) no-repeat}
+.uc_title{height:32px;background-repeat:repeat-x}
+	.uc_title label{display:inline-block;float:left;margin:1px 3px 0 0;padding-left:15px;background-position:0 -88px;cursor:pointer}
+		.uc_title label span{display:inline-block;height:21px;padding:5px 10px 0 0;overflow:hidden;color:#4f4f4f;background-position:right -115px}
 			.uc_title label span em{color:#c04e0b;font-style:normal;font-size:11px}
 			.uc_title label.current span em{color:#f77113}
-	.uc_title label.current{margin-top:1px;background: url(../images/front/ucenter/uc_titlebg.gif) 0 -32px;}
-		.uc_title label.current span{font-size:12px;font-weight:bold;padding-right:15px;color:#fff;background-position:right -60px}
+	.uc_title label.current{margin-top:1px;background-position:0 -32px}
+		.uc_title label.current span{font-size:14px;font-weight:bold;padding-right:15px;color:#fff;background-position:right -60px}
 	.uc_title label a{color:#4f4f4f}
 	.uc_title label.current a{color:#fff}
 .container_2 .uc_title{height:38px;padding:0 0 0 15px;margin:0 0 8px 0;background-position:0 -142px;background-repeat:repeat-x}
-	.container_2 .uc_title label{float:left;margin-top:8px;border:1px solid #FFFFFF;border-bottom:none;background-position:0 -256px}
+	.container_2 .uc_title label{float:left;margin-top:8px;border:1px solid #c0c0c0;border-bottom:none;background-position:0 -256px}
 		.container_2 .uc_title label span{height:23px;background-position:0 -256px;background-repeat:repeat-x}
-	.container_2 .uc_title label.current{margin-top:1px;border:none;background-position:0 -180px;height: 37px;}
-		.container_2 .uc_title label.current span{height:35px;padding-top:2px;line-height:40px;background-position:right -218px;color:#2bc5a3;background-repeat:no-repeat}
+	.container_2 .uc_title label.current{margin-top:1px;border:none;background-position:0 -180px}
+		.container_2 .uc_title label.current span{height:35px;padding-top:2px;line-height:40px;background-position:right -218px;color:#f77113;background-repeat:no-repeat}
 .comment_list .uc_title label span,.ucenter .uc_title label span{font-weight:bold}
 .ucenter .uc_title{margin:0 5px 28px 0}
 .ucenter .main .uc_title2{height:32px;line-height:32px;border-bottom:1px solid #e0e0e0;color:#545454}
@@ -490,7 +490,7 @@ dl.sorting{ position:relative;width:688px;border-bottom:1px solid #e5e5e5;paddin
 /* c_box style end */
 /* display_title style start */
 .display_title{position:relative;z-index:10;height:38px;padding-left:5px;background:url(../images/front/sprites_2.gif) 0 -141px repeat-x;_width:745px;overflow:hidden}
-	.display_title .r,.display_title .l{position:absolute;top:0;width:6px;height:33px;padding-top:5px;background:url(../images/front/sprites_2.gif) no-repeat}
+	.display_title .r,.display_title .l{position:absolute;top:0;width:6px;height:25px;padding-top:5px;background:url(../images/front/sprites_2.gif) no-repeat}
 	.display_title .r{right:0;background-position:-7px -179px}
 	.display_title .l{left:0;background-position:0 -179px}
 	.display_title span.f_l{margin:0 8px 0 11px;line-height:40px;color:#555}
@@ -504,7 +504,7 @@ dl.sorting{ position:relative;width:688px;border-bottom:1px solid #e5e5e5;paddin
 			.display_title ul li a{padding:0 6px 0 10px;font-size:14px;font-weight:bold;text-decoration:none}
 			.display_title a.hover{text-decoration:none}
 			.display_title ul li.current a{color:#fff;line-height:31px;}
-				.display_title ul li a span{margin:0 4px;padding:0 3px 0 0;padding:0 4px 0 0\9;background:url(../images/front/sprites_2.gif) -25px -180px no-repeat}
+				.display_title ul li a span{margin:0 4px;padding:0 5px 0 0;background:url(../images/front/sprites_4.gif) -25px -180px no-repeat}
 				.display_title ul li.current a span{background-position:-36px -180px}
 				.display_title ul li.current a span.desc{background-position:-41px -198px}
 		.show_b,.show_s{display:block;float:left;width:16px;height:16px;margin:10px 6px 0 0;overflow:hidden}
@@ -552,7 +552,7 @@ dl.sorting{ position:relative;width:688px;border-bottom:1px solid #e5e5e5;paddin
 /* display_list style end */
 /* comment_list item style start */
 .comment_list .item{position:relative;min-height:120px;padding:0 14px 10px 128px;margin-top:15px;_zoom:1;_height:120px;}
-	.comment_list .item .user{position:absolute;left:0;top:0;width:128px;}
+	.comment_list .item .user{position:absolute;left:0;top:0;width:128px;text-align: center;}
 		.comment_list .item .user .ico{margin-bottom:5px}
 			.comment_list .item .user .ico img{border:1px solid #d4d4d4}
 	.comment_list .item .desc{min-height:50px;text-align:left;border:1px solid #c6c6c6;padding:10px 15px 5px;background:#fff}
