@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2011 jooyea.cn
+ * @copyright (c) 2011 baihuawei.com
  * @file client_class.php
  * @brief 获取客户端数据信息
  * @author chendeshan

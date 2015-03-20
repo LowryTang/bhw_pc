@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2011 jooyea.cn
+ * @copyright (c) 2011 baihuawei.com
  * @file controllerbase_class.php
  * @brief 控制器基础类
  * @author chendeshan

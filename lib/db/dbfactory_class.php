@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2011 jooyea.cn
+ * @copyright (c) 2011 baihuawei.com
  * @file dbfactory.php
  * @brief 数据库工厂类
  * @author chendeshan

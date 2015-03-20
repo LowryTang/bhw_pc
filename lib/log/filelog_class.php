@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2011 jooyea.cn
+ * @copyright (c) 2011 baihuawei.com
  * @file filelog_class.php
  * @brief 文本格式日志
  * @author RogueWolf

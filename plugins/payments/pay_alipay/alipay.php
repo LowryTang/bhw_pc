@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2011 jooyea.cn
+ * @copyright Copyright(c) 2011 baihuawei.com
  * @file alipay.php
  * @brief 支付宝插件类[担保+即时到帐双接口]
  * @author nswe

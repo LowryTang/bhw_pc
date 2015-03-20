@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2014 jooyea.cn
+ * @copyright Copyright(c) 2014 baihuawei.com
  * @file cipay.php
  * @brief 银信证(外卡)接口
  * @author chendeshan

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2013 jooyea.cn
+ * @copyright (c) 2013 baihuawei.com
  * @file json_class.php
  * @brief 文件处理
  * @author chendeshan

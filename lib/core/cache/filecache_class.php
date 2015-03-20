@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2011 jooyea.cn
+ * @copyright (c) 2011 baihuawei.com
  * @file IFile_cache.php
  * @brief 文件级缓存类
  * @author chendeshan

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2009-2011 jooyea.cn
+ * @copyright (c) 2009-2011 baihuawei.com
  * @file view_action.php
  * @brief 视图动作
  * @author Ben

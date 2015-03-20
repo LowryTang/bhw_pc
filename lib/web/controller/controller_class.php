@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2011 jooyea.cn
+ * @copyright (c) 2011 baihuawei.com
  * @file controller_class.php
  * @brief 控制器类,控制action动作,渲染页面
  * @author chendeshan

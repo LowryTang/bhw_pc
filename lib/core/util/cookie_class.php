@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2009-2011 jooyea.cn
+ * @copyright (c) 2009-2011 baihuawei.com
  * @file cookie_class.php
  * @brief 处理 Cookie
  * @author Ben

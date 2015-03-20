@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2009-2011 jooyea.cn
+ * @copyright (c) 2009-2011 baihuawei.com
  * @file inline_action.php
  * @brief 控制器内部action
  * @author Ben

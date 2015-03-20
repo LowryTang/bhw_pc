@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2011 jooyea.cn
+ * @copyright (c) 2011 baihuawei.com
  * @file safe_class.php
  * @brief 安全机制session或者cookie数据操作
  * @author chendeshan
