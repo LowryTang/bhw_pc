@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2011 jooyea.cn
+ * @copyright (c) 2011 baihuawei.com
  * @file server_class.php
  * @brief 获取服务器环境信息
  * @author chendeshan

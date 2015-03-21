@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2009-2011 jooyea.cn
+ * @copyright (c) 2009-2011 baihuawei.com
  * @file language_class.php
  * @brief 语言包类文件
  * @author Ben

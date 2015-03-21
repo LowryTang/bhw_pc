@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2011 jooyea.cn
+ * @copyright (c) 2011 baihuawei.com
  * @file memcache_class.php
  * @brief memcached内存级缓存类
  * @author chendeshan

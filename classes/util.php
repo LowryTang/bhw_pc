@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2011 jooyea.cn
+ * @copyright Copyright(c) 2011 baihuawei.com
  * @file util.php
  * @brief 公共函数类
  * @author kane

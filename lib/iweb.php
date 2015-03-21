@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2010 jooyea.cn
+ * @copyright Copyright(c) 2010 baihuawei.com
  * @file iweb.php
  * @brief 引用内核入口文件
  * @author chendeshan

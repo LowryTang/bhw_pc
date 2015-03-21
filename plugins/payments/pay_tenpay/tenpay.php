@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2011 jooyea.cn
+ * @copyright Copyright(c) 2011 baihuawei.com
  * @file pay_tenpay.php
  * @brief 腾讯财付通插件类
  * @author kane

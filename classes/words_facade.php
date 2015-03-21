@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2014 jooyea.cn
+ * @copyright (c) 2014 baihuawei.com
  * @file words_facade.php
  * @brief 分词类
  * @author dabao

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2011 jooyea.cn
+ * @copyright (c) 2011 baihuawei.com
  * @file image_class.php
  * @brief 图片处理类库
  * @author chendeshan

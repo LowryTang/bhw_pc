@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2011 jooyea.cn
+ * @copyright (c) 2011 baihuawei.com
  * @file notice.php
  * @brief 用户中心api方法
  * @author chendeshan

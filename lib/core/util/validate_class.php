@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2010 jooyea.cn
+ * @copyright Copyright(c) 2010 baihuawei.com
  * @file
  * @brief 系统统验证类文件
  * @author webning

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2011 jooyea.cn
+ * @copyright Copyright(c) 2011 baihuawei.com
  * @file pay_wangjin.php
  * @brief 网银在线支付接口
  * @author chendeshan

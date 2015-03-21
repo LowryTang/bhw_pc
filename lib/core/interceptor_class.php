@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2011 jooyea.cn
+ * @copyright Copyright(c) 2011 baihuawei.com
  * @file interceptor_class.php
  * @brief 内核拦截器
  * @author walu

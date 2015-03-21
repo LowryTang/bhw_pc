@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2011 jooyea.cn
+ * @copyright (c) 2011 baihuawei.com
  * @file request_class.php
  * @brief 处理 $_GET,$_POST 数据
  * @author chendeshan

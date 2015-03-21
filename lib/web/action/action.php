@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2009-2011 jooyea.cn
+ * @copyright (c) 2009-2011 baihuawei.com
  * @file action.php
  * @brief action 基类文件
  * @author Ben

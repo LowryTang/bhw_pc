@@ -1,6 +1,6 @@
 <?php
 /**
- * @brief 商品采集器与iwebshop外观模式
+ * @brief 商品采集器与外观模式
  * @author chendeshan
  * @date 2014/1/2 8:25:15
  */

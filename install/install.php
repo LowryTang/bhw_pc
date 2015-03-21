@@ -38,7 +38,7 @@
 						}
 						else
 						{
-							echo "本地协议不存在，请访问： <a href='http://www.jooyea.cn' target='_blank'>http://www.jooyea.cn</a> 阅读相关协议";
+							echo "本地协议不存在，请访问： <a href='http://www.baihuawei.com' target='_blank'>http://www.baihuawei.com</a> 阅读相关协议";
 						}
 						?>
 					</div>
@@ -49,7 +49,7 @@
 		</div>
 		<span class="l"></span><span class="r"></span><span class="b_l"></span><span class="b_r"></span>
 	</div>
-	<div class="foot"><a href="http://www.jooyea.cn">关于我们</a>|<a href="http://www.jooyea.cn">官方网站</a>|<a href="http://www.jooyea.cn">联系我们</a>|<a href="">©2005-2014</a></div>
+	<div class="foot"><a href="http://www.baihuawei.com">关于我们</a>|<a href="http://www.baihuawei.com">官方网站</a>|<a href="http://www.baihuawei.com">联系我们</a>|<a href="">©2005-2014</a></div>
 </div>
 
 <script type='text/javascript'>

@@ -1,0 +1,169 @@
+{set:
+    $site_config=new Config('site_config');
+    $seo_data=array();
+    $seo_data['title']=$site_config->name;
+    $seo_data['title'].=$site_config->index_seo_title;
+    $seo_data['keywords']=$site_config->index_seo_keywords;
+    $seo_data['description']=$site_config->index_seo_description;
+    seo::set($seo_data);
+}
+<!--幻灯片-->
+<div class="slider-wrap">
+    {if:$this->index_slide}
+    <ul class="bxslider">
+        {foreach:items=$this->index_slide}
+        <li title="{$item['name']}">
+            <a href="{url:$item[url]}" target="_blank">
+                <img src="{webroot:$item[img]}"title="{$item['name']}" />
+            </a>
+        </li>
+        {/foreach}
+    </ul>
+    {/if}
+</div>
+<!--推荐商品-->
+<div class="w1190">
+    <div class="tips">
+        <ul>
+            <li class="bhw-i1"></li>
+            <li class="bhw-i2"></li>
+            <li class="bhw-i3"></li>
+            <li class="bhw-i4"></li>
+        </ul>
+    </div>
+    <div class="promotion">
+        <div class="title-wrap">
+            <div class="base-icon bhw-promotion-logo auto-margin"></div>
+            <!-- <span class="get-more"><a href="{url:site/groupon}">查看更多>></a></span> -->
+            <!-- <p class="split"></p> -->
+        </div>
+        {query:name=promotion as p join=left join goods as go on go.id eq p.condition fields=p.end_time,p.name as name,p.award_value as award_value,go.market_price as market_price,go.id as goods_id,p.id as p_id,end_time, p.intro, p.img where=p.type eq 1 and p.is_close eq 0 and go.is_del eq 0 and NOW() between start_time and end_time AND go.id is not null limit=10}
+            {set:$countNumsItem[]=$item['p_id'];}{set:$free_time=ITime::getDiffSec($item['end_time'])}
+            {set:$tmpGoodsId=$item['goods_id'];$tmpPId=$item['p_id'];set:$discount=round($item['award_value']/$item['market_price'],1)}
+            <div class="content-wrap">
+                <div class="left-content">
+                    <a href="{url:/site/products/id/$tmpGoodsId/promo/time/active_id/$tmpPId}">
+                        <img src="{webroot:}{echo:Thumb::get($item['img'],1190,360)}" alt="{$item['name']}">
+                    </a>
+                </div>
+                <div class="right-content">
+                    <div class="countdown" >
+                        <span class="title">距离特卖结束</span>
+                        <span class="time-down">
+                            <b id='promotion_day_{$item['id']}'>{echo:floor($free_time/86400);}</b>:<b id='promotion_hour_{$item['p_id']}'>{echo:floor($free_time%86400/3600);}</b>:<b id='promotion_minute_{$item['p_id']}'>{echo:floor(($free_time%3600)/60);}</b>:<b id='promotion_second_{$item['p_id']}'>{echo:$free_time%60;}</b>
+                        </span>
+                    </div>
+                    <div class="inner f16">
+                        <p><em class="discount">{$discount}折/</em>{$item['intro']}</p>
+                    </div>
+                    <div class="footer main-color">
+                        <div class="good-price">
+                            <em class="currency-symbol">¥</em>
+                            <span class="award-value">{$item['award_value']}</span><span class="market-price">¥{$item['market_price']}</span>
+                        </div>
+                        <div class="check-detail">
+                            <a href="{url:/site/products/id/$tmpGoodsId/promo/time/active_id/$tmpPId}" title="{$item['name']}" target="_blank">查看详情</a>
+                        </div>
+                        <div class="purchased-people"><em class="count">{$item['sale']}</em>人已购买</div>
+                    </div>
+                </div>
+            </div>
+        {/query}
+    </div>
+    <div class="regiment">
+        <div class="title-wrap">
+            <div class="base-icon bhw-regiment-logo auto-margin"></div>
+            <span class="get-more"><a href="{url:site/groupon}">MORE</a></span>
+            <!-- <p class="split"></p> -->
+        </div>
+        {query:name=regiment as p join=left join goods as go on go.id eq p.goods_id fields=p.img, p.intro, go.name, p.regiment_price, p.sell_price, p.sum_count, p.id, p.goods_id, p.end_time where=p.is_close eq 0 and go.is_del eq 0 and NOW() between start_time and end_time AND go.id is not null limit=12}
+            {set:$regimentItems[]=$item['id'];}{set:$free_time=ITime::getDiffSec($item['end_time'])}
+            {set:$tmpGoodsId=$item['goods_id'];$tmpPId=$item['id'];}
+            <div class="regiment-item">
+                <div class="top-content">
+                    <a href="{url:/site/products/id/$tmpGoodsId/promo/groupon/active_id/$tmpPId}">
+                        <img src="{webroot:}{echo:Thumb::get($item['img'],378,220)}">
+                    </a>
+                </div>
+                <div class="bottom-content">
+                    <div class="title">{$item['name']}</div>
+                    <p  class="detail">{$item['intro']}</p>
+                    <div class="price">
+                        <em class="currency-symbol">¥</em>
+                        <span class="award-value">{$item['regiment_price']}</span>
+                        <span class="market-price">¥{$item['sell_price']}</span>
+                    </div>
+                </div>
+                <div class="footer f16">
+                    <span class="f14">{$item['sum_count']}<em>人购买</em></span>
+                    <span class="time-count">
+                        <b id='regiment_day_{$item['id']}'>{echo:floor($free_time/86400);}</b><em>天</em><b id='regiment_hour_{$item['id']}'>{echo:floor($free_time%86400/3600);}</b><em>时</em><b id='regiment_minute_{$item['id']}'>{echo:floor(($free_time%3600)/60);}</b><em>分</em><b id='regiment_second_{$item['id']}'>{echo:$free_time%60;}</b><em>秒</em>
+                    </span>
+                </div>
+            </div>
+        {/query}
+    </div>
+</div>
+<link rel="stylesheet" type="text/css" href="{theme:javascript/jquery.bxSlider/jquery.bxslider.css}" />
+<script type="text/javascript" src="{theme:javascript/jquery.bxSlider/jquery.bxSlider.min.js}"></script>
+<script type='text/javascript'>
+//dom载入完毕执行
+$(function() {
+    //幻灯片开启
+    $('.bxslider').bxSlider({
+        'mode': 'fade',
+        'captions': true,
+        'auto': true,
+        'pager': false,
+        'controls': false,
+        // 'responsive': false
+    });
+    //index 分类展示
+    $('#index_category tr').hover(function() {
+        $(this).addClass('current');
+    }, function() {
+        $(this).removeClass('current');
+    });
+    //email订阅 事件绑定
+    var tmpObj = $('input:text[name="orderinfo"]');
+    var defaultText = tmpObj.val();
+    tmpObj.bind({
+        focus: function() {
+            checkInput($(this), defaultText);
+        },
+        blur: function() {
+            checkInput($(this), defaultText);
+        }
+    });
+    //显示抢购倒计时
+    var cd_timer = new countdown("promotion"); 
+    {foreach: items = $countNumsItem}
+    cd_timer.add({$item}); 
+    {/foreach}
+    var re_timer = new countdown("regiment"); 
+    {foreach: items = $regimentItems}
+    re_timer.add({$item});
+    {/foreach}
+    //首页商品变色
+    var colorArray = ['green', 'yellow', 'purple'];
+    $('div[name="showGoods"]').each(function(i) {
+        $(this).addClass(colorArray[i % colorArray.length]);
+    });
+});
+        //电子邮件订阅
+function orderinfo() {
+    var email = $('[name="orderinfo"]').val();
+    if (email == '') {
+        alert('请填写正确的email地址');
+    } else {
+        $.getJSON('{url:/site/email_registry}', {
+            email: email
+        }, function(content) {
+            if (content.isError == false) {
+                alert('订阅成功');
+                $('[name="orderinfo"]').val('');
+            } else alert(content.message);
+        });
+    }
+}
+</script>

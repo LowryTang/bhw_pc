@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2010 jooyea.cn
+ * @copyright Copyright(c) 2010 baihuawei.com
  * @file xml_class.php
  * @brief 封装XML操作类
  * 主要实现XML快速操作

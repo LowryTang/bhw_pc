@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2010 jooyea.cn
+ * @copyright Copyright(c) 2010 baihuawei.com
  * @file query_class.php
  * @brief 系统统一查询类文件，处理复杂的查询问题
  * @author webning
