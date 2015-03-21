@@ -15,7 +15,7 @@
 abstract class IApplication
 {
 	//应用的名称
-    public $name = 'iWebShop';
+    public $name = 'baihuawei';
 
     //用户的编码
     public $charset = 'UTF-8';
