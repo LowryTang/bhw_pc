@@ -110,7 +110,7 @@ class SendMail
 	{
 		if(is_object($this->smtp))
 		{
-			$this->smtp->FromName= isset($this->config['name']) ? $this->config['name'] : 'iWebShop';
+			$this->smtp->FromName= isset($this->config['name']) ? $this->config['name'] : 'baihuawei';
 			$this->smtp->From    = $this->config['mail_address'];
 			$this->smtp->Subject = $title;
 			$this->smtp->Body    = $content;
