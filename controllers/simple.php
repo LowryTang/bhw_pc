@@ -17,6 +17,11 @@ class Simple extends IController
 {
     public $layout='site_mini';
 
+	/*
+	* @var 设置论坛注册Api
+	*/
+	public static $forum_api = 'http://120.24.79.206/clark/bhw_forum/index.php';
+
 	function init()
 	{
 		CheckRights::checkUserRights();
@@ -95,7 +100,7 @@ class Simple extends IController
     	{
     		$userObj = new IModel('user');
     		//$where   = 'email = "'.$email.'" or username = "'.$email.'" or username = "'.$username.'"';
-		$where = "username = '".$mobile."'";
+			$where = "username = '".$mobile."'";
     		$userRow = $userObj->getObj($where);
 
     		if($userRow)
@@ -120,6 +125,11 @@ class Simple extends IController
 	    		);
 	    		$userObj->setData($userArray);
 	    		$user_id = $userObj->add();
+				
+				//同步注册论坛
+				//begin
+				$this->register_forum($mobile,$password);
+				//end
 
 	    		if($user_id)
 	    		{
@@ -168,6 +178,22 @@ class Simple extends IController
     		Util::showMessage($message);
     	}
     }
+
+	//同步注册论坛
+	//begin
+	function register_forum($mobile,$password){
+		$url = self::$forum_api.'?/account/ajax/register_process/';
+		$arrRegister = array('user_name' => $mobile, 'password' => $password, 'agreement_chk' => 'agree', '_post_type' => 'ajax');
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_URL,$url);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $arrRegister);
+		$result = curl_exec($ch);
+		return $result;
+	}
+	//end
+	//同步注册论坛
 
     //用户登录
     function login_act()
