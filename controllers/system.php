@@ -458,7 +458,8 @@ class System extends IController
 			}
 
 			//跳转方法
-			$this->conf_base($form_index);
+			//为避免读取的配置文件内容不一致，增加传递参数
+			$this->conf_base($form_index,$inputArray);
 		}
 		else
 		{
@@ -470,11 +471,18 @@ class System extends IController
 	}
 
 	//[网站管理]展示站点管理配置信息[单页]
-	function conf_base($form_index = null)
+	function conf_base($form_index = null,$inputArray = array())
 	{
 		//配置信息
 		$siteConfigObj = new Config("site_config");
 		$site_config   = $siteConfigObj->getInfo();
+		if(!empty($inputArray)){
+			foreach($inputArray as $k => $v){
+				if($site_config[$k] != $v){
+					 $site_config[$k] = $v;
+				}
+			}
+		}
 		$main_config   = include(IWeb::$app->getBasePath().'config/config.php');
 
 		$configArray   = array_merge($main_config,$site_config);
