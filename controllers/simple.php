@@ -156,9 +156,15 @@ class Simple extends IController
 			    		ISafe::set('user_id',$user_id);
 			    		ISafe::set('user_pwd',$userArray['password']);
 
-					//自定义跳转页面
-					$callback = $callback ? urlencode($callback) : '';
-					$this->redirect('/site/success?message='.urlencode("注册成功！").'&callback='.$callback);
+						//自定义跳转页面
+						$callback_url = $callback;
+						$callback = $callback ? urlencode($callback) : '';
+						if(stristr($callback_url,'http')){
+							header("Location: ".$callback_url);
+							exit;
+						}else{
+							$this->redirect('/site/success?message='.urlencode("注册成功！").'&callback='.$callback);
+						}
 		    		}
 	    		}
 	    		else
