@@ -182,7 +182,10 @@ class Simple extends IController
 	//同步注册论坛
 	//begin
 	function register_forum($mobile,$password){
-		$url = self::$forum_api.'?/account/ajax/register_process/';
+		$siteConfigObj = new Config("site_config");
+		$site_config   = $siteConfigObj->getInfo();
+		$forum_api	   = isset($site_config['forum_home_api']) ? $site_config['tax'] : 'http://www.baihuawei.com/index.php';
+		$url = $forum_api.'?/account/ajax/register_process/';
 		$arrRegister = array('user_name' => $mobile, 'password' => $password, 'agreement_chk' => 'agree', '_post_type' => 'ajax');
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_POST, 1);
