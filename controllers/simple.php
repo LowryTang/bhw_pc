@@ -1957,6 +1957,11 @@ class Simple extends IController
 			$this->username = $mobile;
     		$this->redirect('forgot_password',false);
     		Util::showMessage($message);
+		}else{
+			$this->username = $mobile; 
+			$this->redirect('login',false);
+			$message = "修改密码成功，请登录";
+			Util::showMessage($message);
 		}
 	}
 }
