@@ -10,7 +10,7 @@
   'order_type' => 'asc',
   'list_type' => 'win',
   'auto_finish' => '1',
-  'index_slide' => 'a:2:{i:0;a:3:{s:4:"name";s:45:"花的秘密，花的味道，中国好闺蜜";s:3:"url";s:17:"www.baihuawei.com";s:3:"img";s:39:"upload/2015/03/11/20150311110917446.jpg";}i:1;a:3:{s:4:"name";s:24:"来自云南的花味道";s:3:"url";s:17:"www.baihuawei.com";s:3:"img";s:39:"upload/2015/03/11/20150311110917317.jpg";}}',
+  'index_slide' => 'a:2:{i:0;a:3:{s:4:"name";s:45:"花的秘密，花的味道，中国好闺蜜";s:3:"url";s:17:"www.baihuawei.com";s:3:"img";s:39:"upload/2015/03/20/5503b58bNa7402c32.jpg";}i:1;a:3:{s:4:"name";s:24:"来自云南的花味道";s:3:"url";s:17:"www.baihuawei.com";s:3:"img";s:39:"upload/2015/03/20/54ed32f6Nd8d92e26.jpg";}}',
   'name' => '百花味',
   'url' => 'http://www.baihuawei.com',
   'master' => '',
@@ -27,4 +27,6 @@
   'index_seo_keywords' => '时尚鲜花产品,鲜花产品特卖,鲜花产品团购',
   'index_seo_description' => '百花味网，中国最大的时尚鲜花类产品特卖网。',
   'goods_no_pre' => 'SD',
+  'forum_home_api' => 'http://120.24.79.206/clark/bhw_forum/index.php',
+  'message_company_conf' => '百花味',
 )?>
