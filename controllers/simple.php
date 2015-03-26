@@ -1905,4 +1905,58 @@ class Simple extends IController
 		}
 		die(JSON::encode($result));
 	}
+
+	function forgotPassword(){
+		$this->redirect('forgot_password');
+	}
+
+	function forgotPassword_act(){
+		$mobile     = IFilter::act(IReq::get('mobile','post'));
+		$mobilecode = IFilter::act(IReq::get('mobilecode','post'));
+		$password   = IFilter::act(IReq::get('password','post'));
+		$repassword = IFilter::act(IReq::get('repassword','post'));
+		$captcha    = IFilter::act(IReq::get('captcha','post'));
+		$callback   = IFilter::act(IReq::get('callback'),'text');
+		$message    = '';
+		$strCode = messageauthentication::validateCodeWhenForgotPassword($mobile,$mobilecode);
+		$arrCode = json_decode($strCode,true);
+		if($arrCode['result'] == 0){
+			$boolMobileFlag = 1;
+			$strMsg = $arrCode['message'];
+		}else{
+			$boolMobileFlag = 0;
+			$strMsg = $arrCode['message'];
+		}
+		if(IValidate::mobi($mobile) == false){
+			$message = '手机号码格式不正确';
+		}else if(!$boolMobileFlag){
+			$message = $strMsg;
+		}else if(!preg_match('|\S{6,32}|',$password)){
+    		$message = '密码必须是字母，数字，下划线组成的6-32个字符';
+    	}else if($password != $repassword){
+    		$message = '2次密码输入不一致';
+    	}else{
+			$userObj = new IModel('user');
+    		//$where   = 'email = "'.$email.'" or username = "'.$email.'" or username = "'.$username.'"';
+			$where = "username = '".$mobile."'";
+    		$userRow = $userObj->getObj($where);
+			if($userRow){
+				$passwordData = array(
+			    	'password'   => md5($password),
+			    );
+				$userObj->setData($passwordData);
+				$where = "username = '".$mobile."'";
+				$ret = $userObj->update($where);
+			}else{
+				$message = "此手机尚未注册过，请先注册";
+			}			
+		}
+		
+		//出错信息展示
+    	if($message){
+			$this->username = $mobile;
+    		$this->redirect('forgot_password',false);
+    		Util::showMessage($message);
+		}
+	}
 }
