@@ -32,7 +32,7 @@
                     <a href="{url:/simple/logout}" class="reg">退出</a> 
                 {else:} 
                     您好，欢迎来到{echo:$siteConfig->name}！ 
-                    <a href="{url:/simple/login?callback=$callback}">登录</a> | <a class="reg" href="{url:/simple/reg?callback=$callback}">免费注册</a> 
+                    <a href="{url:/simple/login?callback=$callback}">登录</a> | <a class="reg" href="{url:/simple/reg?callback=$callback}">免费注册</a> | <a href="{url:/simple/forgotPassword?callback=$callback}">忘记密码</a> 
                 {/if}</div>
             <div class="right">
                 <a href="{url:/ucenter/index}">我的账户</a> | <a href="{url:/ucenter/order}">我的订单</a> | <a href="{url:/site/help_list}">帮助中心</a>
