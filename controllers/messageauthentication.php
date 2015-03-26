@@ -18,9 +18,14 @@ class Messageauthentication extends IController{
 	public static $codeCount = 6;
 
 	/*
-	* @var 设置session前缀
+	* @var 设置session前缀,注册时使用的session前缀
 	*/
 	public static $prefix = 'sessionTelephonePrefix_';
+	
+	/*
+	* @var 设置session前缀，忘记密码，进行重置密码时使用；
+	*/
+	public static $forgetPasswordPrefix = 'sessionForgetPasswordPrefix_';
 	
 	/*
 	* @var 设置短信平台私钥
@@ -45,12 +50,13 @@ class Messageauthentication extends IController{
 	}
 	
 	/*
-	* @brief 发送短信验证码
+	* @brief 发送短信验证码,注册时调用此接口
 	* @param $tel String 电话号码
 	* @return Boolean
 	*/
 	public function sendCodeToValidate(){
-		$tel = IFilter::act(IReq::get('tel'),'int');
+		//$tel = IFilter::act(IReq::get('tel'),'int');
+		$tel = IReq::get("tel");
 		if(!$tel){
 			return false;
 		}
@@ -78,14 +84,16 @@ class Messageauthentication extends IController{
 	}
 
 	/*
-	* @brief 验证短信验证码
+	* @brief 验证短信验证码，注册时调用此接口
 	* @param $tel Integer 电话号码
 	* @param $code Integer 验证码
 	* @return array("result"=>"0","message"=>"验证码正确")；
 	*/
 	public function validateCode(){
-		$tel = IFilter::act(IReq::get('tel'),'int');
-		$code = IFilter::act(IReq::get('code'),'int');
+		//$tel = IFilter::act(IReq::get('tel'),'int');
+		//$code = IFilter::act(IReq::get('code'),'int');
+		$tel = IReq::get("tel");
+		$code = IReq::get("code");
 		if(!$code || !$tel){
 			$str = json_encode(array("result" => "1","message" => "手机号码或验证码为空"));
 			return $str;
@@ -114,7 +122,7 @@ class Messageauthentication extends IController{
 	}
 	
 	/*
-	* @brief 验证短信验证码
+	* @brief 验证短信验证码，注册时调用此接口
 	* @param $tel Integer 电话号码
 	* @param $code Integer 验证码
 	* @return array("result"=>"0","message"=>"验证码正确")；
@@ -161,6 +169,11 @@ class Messageauthentication extends IController{
 				$arrKey = explode("_",$key);
 				$tel = $arrKey[2];
 				ISession::clear(self::$prefix.$tel);
+			}
+			if(stristr($key,self::$forgetPasswordPrefix)){
+				$arrKey = explode("_",$key);
+				$tel = $arrKey[2];
+				ISession::clear(self::$forgetPasswordPrefix.$tel);
 			}
 		}
 	}
@@ -219,5 +232,75 @@ class Messageauthentication extends IController{
 			$data .= fgets($fp,4096);
 		}
 		return $data;
+	}
+	
+	/*
+	* @brief 发送短信验证码,忘记密码时调用此接口
+	* @param $tel String 电话号码
+	* @return Boolean
+	*/
+	public function sendCodeToValidateWhenForgotPassword(){
+		$tel = IReq::get("tel");
+		//$tel = IFilter::act(IReq::get('tel'),'int');
+		if(!$tel){
+			return false;
+		}
+		//生成4位的数字验证码，发短信且发邮件来验证        
+		$arrRand = array();
+		for($count = self::$codeCount - 2; $count > 0; $count--){
+			$arrRand[] = mt_rand(0,9); 
+		}
+		$strRand = implode('',$arrRand);
+		$arrCode = array(
+			"tel" => $tel,
+			"code" => $strRand,
+			"startTime" => strtotime('now')
+		);
+		//将手机验证码存入session
+		$key = self::$forgetPasswordPrefix.$tel;
+		ISession::set($key,$arrCode);
+		//$strMessage = "您的验证码是#".$strRand."#。如非本人操作，请忽略本短信";
+		$site_config=new Config("site_config");
+		$site_config=$site_config->getInfo();
+		$company = isset($site_config['message_company_conf']) ? $site_config['message_company_conf'] : '百花味';
+		$strMessage = "#company#=".$company."&#code#=".$strRand;
+		//发送验证码到手机
+		$result = $this->sendMessageUsingTpl(self::$apiKey,self::$tplId,$strMessage,$tel);
+		echo $result;
+		return $result;
+	}
+	
+	/*
+	* @brief 验证短信验证码，忘记密码时调用此接口
+	* @param $tel Integer 电话号码
+	* @param $code Integer 验证码
+	* @return array("result"=>"0","message"=>"验证码正确")；
+	*/
+	public static function validateCodeWhenForgotPassword($tel,$code){
+		if(!$code || !$tel){
+			$str = json_encode(array("result" => "1","message" => "手机号码或验证码为空"));
+			return $str;
+		}
+		$arrCode = ISession::get(self::$forgetPasswordPrefix.$tel);
+		if(empty($arrCode) || !is_array($arrCode)){
+			$str = json_encode(array("result" => "1","message" => "该手机尚未发送验证码"));
+			return $str;
+		}
+		//验证手机号码、手机验证码、验证码有效期
+		$interval = strtotime('now') - $arrCode['startTime'];
+		if(($tel == $arrCode['tel']) && ($code == $arrCode['code']) && ($interval <= self::$expireTime)){
+			//验证通过后删除session，防止多次验证
+			ISession::clear(self::$forgetPasswordPrefix.$tel);
+			$str = json_encode(array("result" => "0","message" => "验证码正确"));
+			return $str;
+		}elseif(($tel == $arrCode['tel']) && ($code == $arrCode['code'])){
+			//清除过期的session
+			ISession::clear(self::$forgetPasswordPrefix.$tel);
+			$str = json_encode(array("result" => "1","message" => "验证码超时"));
+			return $str;
+		}else{
+			$str = json_encode(array("result" => "1","message" => "验证码错误"));
+			return $str;
+		}
 	}
 }
