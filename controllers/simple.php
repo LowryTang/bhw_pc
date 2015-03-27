@@ -190,7 +190,7 @@ class Simple extends IController
 	function register_forum($mobile,$password){
 		$siteConfigObj = new Config("site_config");
 		$site_config   = $siteConfigObj->getInfo();
-		$forum_api	   = isset($site_config['forum_home_api']) ? $site_config['tax'] : 'http://www.baihuawei.com/index.php';
+		$forum_api	   = isset($site_config['forum_home_api']) ? $site_config['forum_home_api'] : 'http://www.baihuawei.com/index.php';
 		$url = $forum_api.'?/account/ajax/register_process/';
 		$arrRegister = array('user_name' => $mobile, 'password' => $password, 'agreement_chk' => 'agree', '_post_type' => 'ajax');
 		$ch = curl_init();
@@ -1958,10 +1958,32 @@ class Simple extends IController
     		$this->redirect('forgot_password',false);
     		Util::showMessage($message);
 		}else{
+			//同步修改论坛密码
+			$this->change_password_forum($mobile,$password);
+
 			$this->username = $mobile; 
 			$this->redirect('login',false);
 			$message = "修改密码成功，请登录";
 			Util::showMessage($message);
 		}
 	}
+
+	//同步修改论坛密码
+	//begin
+	function change_password_forum($mobile,$password){
+		$siteConfigObj = new Config("site_config");
+		$site_config   = $siteConfigObj->getInfo();
+		$forum_api	   = isset($site_config['forum_home_api']) ? $site_config['forum_home_api'] : 'http://www.baihuawei.com/index.php';
+		$url = $forum_api.'?/account/ajax/change_password/';
+		$arrRegister = array('user_name' => $mobile, 'password' => $password, '_post_type' => 'ajax');
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_URL,$url);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $arrRegister);
+		$result = curl_exec($ch);
+		return $result;
+	}
+	//end
+	//同步修改论坛密码
 }
