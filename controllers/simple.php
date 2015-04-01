@@ -203,6 +203,121 @@ class Simple extends IController
 	}
 	//end
 	//同步注册论坛
+	
+	//用户注册，手机端api
+    function mobile_reg_act()
+    {
+    	$mobile      = IFilter::act(IReq::get('mobile','post'));
+    	$mobilecode  = IFilter::act(IReq::get('mobilecode','post'));
+    	$password   = IFilter::act(IReq::get('password','post'));
+    	$repassword = IFilter::act(IReq::get('repassword','post'));
+    	$captcha    = IFilter::act(IReq::get('captcha','post'));
+    	$callback   = IFilter::act(IReq::get('callback'),'text');
+    	$message    = '';
+
+    	//获取注册配置参数
+	$siteConfig = new Config('site_config');
+	$reg_option = $siteConfig->reg_option;
+
+	/*注册信息校验*/
+	$strCode = messageauthentication::validateMobileCode($mobile,$mobilecode);
+	$arrCode = json_decode($strCode,true);
+	if($arrCode['result'] == 0){
+		$boolMobileFlag = 1;
+		$strMsg = $arrCode['message'];
+	}else{
+		$boolMobileFlag = 0;
+		$strMsg = $arrCode['message'];
+	}
+	if($reg_option == 2)
+	{
+		$message = '当前网站禁止新用户注册';
+	}
+    	else if(IValidate::mobi($mobile) == false)
+    	{
+    		$message = '手机号码格式不正确';
+    	}
+    	else if(!$boolMobileFlag)
+    	{
+    		$message = $strMsg;
+    	}
+    	else if(!preg_match('|\S{6,32}|',$password))
+    	{
+    		$message = '密码必须是字母，数字，下划线组成的6-32个字符';
+    	}
+    	else if($password != $repassword)
+    	{
+    		$message = '2次密码输入不一致';
+    	}
+    	else if(0 && $captcha != ISafe::get('captcha'))
+    	{
+    		$message = '验证码输入不正确';
+    	}
+    	else
+    	{
+    		$userObj = new IModel('user');
+    		//$where   = 'email = "'.$email.'" or username = "'.$email.'" or username = "'.$username.'"';
+			$where = "username = '".$mobile."'";
+    		$userRow = $userObj->getObj($where);
+
+    		if($userRow)
+    		{
+			$message = "手机号已经被注册过，请重新更换";    		
+    		}
+    		else
+    		{
+	    		//user表
+	    		$userArray = array(
+	    			'username' => $mobile,
+	    			'password' => md5($password),
+	    			'email'    => $mobile,
+	    		);
+	    		$userObj->setData($userArray);
+	    		$user_id = $userObj->add();
+				
+				//同步注册论坛
+				//begin
+				$this->register_forum($mobile,$password);
+				//end
+
+	    		if($user_id)
+	    		{
+					//member表
+		    		$memberArray = array(
+		    			'user_id' => $user_id,
+		    			'time'    => ITime::getDateTime(),
+		    			'status'  => $reg_option == 1 ? 3 : 1,
+		    		);
+
+		    		$memberObj = new IModel('member');
+		    		$memberObj->setData($memberArray);
+		    		$memberObj->add();		    		
+					//用户私密数据
+			    	ISafe::set('username',$mobile);
+			    	ISafe::set('user_id',$user_id);
+			    	ISafe::set('user_pwd',$userArray['password']);
+	    		}
+	    		else
+	    		{
+	    			$message = '对不起，注册失败';
+	    		}
+	    	}
+    	}
+
+		//出错信息展示
+    	if($message){
+    		$this->username = $mobile;
+			$arrRet = array('result' => 1,'message' => $message);
+			$strRet = json_encode($arrRet);
+			echo $strRet;
+			return $strRet;
+    	}else{
+			$arrRet = array('result' => 0,'message' => '注册成功！');
+			$strRet = json_encode($arrRet);
+			echo $strRet;
+			return $strRet;
+		}
+    }
 
     //用户登录
     function login_act()
@@ -1965,6 +2080,67 @@ class Simple extends IController
 			$this->redirect('login',false);
 			$message = "修改密码成功，请登录";
 			Util::showMessage($message);
+		}
+	}
+	
+	function mobile_forgotPassword_act(){
+		$mobile     = IFilter::act(IReq::get('mobile','post'));
+		$mobilecode = IFilter::act(IReq::get('mobilecode','post'));
+		$password   = IFilter::act(IReq::get('password','post'));
+		$repassword = IFilter::act(IReq::get('repassword','post'));
+		$captcha    = IFilter::act(IReq::get('captcha','post'));
+		$callback   = IFilter::act(IReq::get('callback'),'text');
+		$message    = '';
+		$strCode = messageauthentication::validateCodeWhenForgotPassword($mobile,$mobilecode);
+		$arrCode = json_decode($strCode,true);
+		if($arrCode['result'] == 0){
+			$boolMobileFlag = 1;
+			$strMsg = $arrCode['message'];
+		}else{
+			$boolMobileFlag = 0;
+			$strMsg = $arrCode['message'];
+		}
+		if(IValidate::mobi($mobile) == false){
+			$message = '手机号码格式不正确';
+		}else if(!$boolMobileFlag){
+			$message = $strMsg;
+		}else if(!preg_match('|\S{6,32}|',$password)){
+    		$message = '密码必须是字母，数字，下划线组成的6-32个字符';
+    	}else if($password != $repassword){
+    		$message = '2次密码输入不一致';
+    	}else{
+			$userObj = new IModel('user');
+    		//$where   = 'email = "'.$email.'" or username = "'.$email.'" or username = "'.$username.'"';
+			$where = "username = '".$mobile."'";
+    		$userRow = $userObj->getObj($where);
+			if($userRow){
+				$passwordData = array(
+			    	'password'   => md5($password),
+			    );
+				$userObj->setData($passwordData);
+				$where = "username = '".$mobile."'";
+				$ret = $userObj->update($where);
+			}else{
+				$message = "此手机尚未注册过，请先注册";
+			}			
+		}
+		
+		//出错信息展示
+    	if($message){
+			$this->username = $mobile;
+    		$arrRet = array('result' => 1,'message' => $message);
+			$strRet = json_encode($arrRet);
+			echo $strRet;
+			return $strRet;
+		}else{
+			//同步修改论坛密码
+			$this->change_password_forum($mobile,$password);
+
+			$this->username = $mobile; 
+			$arrRet = array('result' => 0,'message' => '修改密码成功');
+			$strRet = json_encode($arrRet);
+			echo $strRet;
+			return $strRet;
 		}
 	}
 
