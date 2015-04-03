@@ -59,24 +59,26 @@ class Simple extends IController
     	$message    = '';
 
     	//获取注册配置参数
-	$siteConfig = new Config('site_config');
-	$reg_option = $siteConfig->reg_option;
+		$siteConfig = new Config('site_config');
+		$reg_option = $siteConfig->reg_option;
 
-	/*注册信息校验*/
-	$strCode = messageauthentication::validateMobileCode($mobile,$mobilecode);
-	$arrCode = json_decode($strCode,true);
-	if($arrCode['result'] == 0){
-		$boolMobileFlag = 1;
-		$strMsg = $arrCode['message'];
-	}else{
-		$boolMobileFlag = 0;
-		$strMsg = $arrCode['message'];
-	}
-	if($reg_option == 2)
-	{
-		$message = '当前网站禁止新用户注册';
-	}
-    	else if(IValidate::mobi($mobile) == false)
+		/*注册信息校验*/
+		$objMessage = new messageauthentication();
+		$strCode = $objMessage->validateCode($mobile,$mobilecode);
+		//$strCode = messageauthentication::validateMobileCode($mobile,$mobilecode);
+		$arrCode = json_decode($strCode,true);
+		if($arrCode['result'] == 0){
+			$boolMobileFlag = 1;
+			$strMsg = $arrCode['message'];
+		}else{
+			$boolMobileFlag = 0;
+			$strMsg = $arrCode['message'];
+		}
+		if($reg_option == 2)
+		{
+			$message = '当前网站禁止新用户注册';
+		}
+		else if(IValidate::mobi($mobile) == false)
     	{
     		$message = '手机号码格式不正确';
     	}
@@ -216,23 +218,25 @@ class Simple extends IController
     	$message    = '';
 
     	//获取注册配置参数
-	$siteConfig = new Config('site_config');
-	$reg_option = $siteConfig->reg_option;
+		$siteConfig = new Config('site_config');
+		$reg_option = $siteConfig->reg_option;
 
-	/*注册信息校验*/
-	$strCode = messageauthentication::validateMobileCode($mobile,$mobilecode);
-	$arrCode = json_decode($strCode,true);
-	if($arrCode['result'] == 0){
-		$boolMobileFlag = 1;
-		$strMsg = $arrCode['message'];
-	}else{
-		$boolMobileFlag = 0;
-		$strMsg = $arrCode['message'];
-	}
-	if($reg_option == 2)
-	{
-		$message = '当前网站禁止新用户注册';
-	}
+		/*注册信息校验*/
+		//$strCode = messageauthentication::validateMobileCode($mobile,$mobilecode);
+		$objMessage = new messageauthentication();
+		$strCode = $objMessage->validateCode($mobile,$mobilecode);
+		$arrCode = json_decode($strCode,true);
+		if($arrCode['result'] == 0){
+			$boolMobileFlag = 1;
+			$strMsg = $arrCode['message'];
+		}else{
+			$boolMobileFlag = 0;
+			$strMsg = $arrCode['message'];
+		}
+		if($reg_option == 2)
+		{
+			$message = '当前网站禁止新用户注册';
+		}
     	else if(IValidate::mobi($mobile) == false)
     	{
     		$message = '手机号码格式不正确';
@@ -2033,7 +2037,9 @@ class Simple extends IController
 		$captcha    = IFilter::act(IReq::get('captcha','post'));
 		$callback   = IFilter::act(IReq::get('callback'),'text');
 		$message    = '';
-		$strCode = messageauthentication::validateCodeWhenForgotPassword($mobile,$mobilecode);
+		$objMessage = new messageauthentication();
+		$strCode = $objMessage->validateCodeWhenForgotPassword($mobile,$mobilecode);
+		//$strCode = messageauthentication::validateCodeWhenForgotPassword($mobile,$mobilecode);
 		$arrCode = json_decode($strCode,true);
 		if($arrCode['result'] == 0){
 			$boolMobileFlag = 1;

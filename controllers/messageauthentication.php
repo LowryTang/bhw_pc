@@ -73,7 +73,7 @@ class Messageauthentication extends IController{
 		);
 		//将手机验证码存入session
 		$key = self::$prefix.$tel;
-		ISession::set($key,$arrCode);
+		$ret = ISession::set($key,$arrCode);
 		//$strMessage = "您的验证码是#".$strRand."#。如非本人操作，请忽略本短信";
 		$company = isset($site_config['message_company_conf']) ? $site_config['message_company_conf'] : '百花味';
 		$strMessage = "#company#=".$company."&#code#=".$strRand;
@@ -90,11 +90,11 @@ class Messageauthentication extends IController{
 	* @param $code Integer 验证码
 	* @return array("result"=>"0","message"=>"验证码正确")；
 	*/
-	public function validateCode(){
+	public function validateCode($tel,$code){
 		//$tel = IFilter::act(IReq::get('tel'),'int');
 		//$code = IFilter::act(IReq::get('code'),'int');
-		$tel = IReq::get("tel");
-		$code = IReq::get("code");
+		//$tel = IReq::get("tel");
+		//$code = IReq::get("code");
 		if(!$code || !$tel){
 			$str = json_encode(array("result" => "1","message" => "手机号码或验证码为空"));
 			return $str;
@@ -277,7 +277,7 @@ class Messageauthentication extends IController{
 	* @param $code Integer 验证码
 	* @return array("result"=>"0","message"=>"验证码正确")；
 	*/
-	public static function validateCodeWhenForgotPassword($tel,$code){
+	public function validateCodeWhenForgotPassword($tel,$code){
 		if(!$code || !$tel){
 			$str = json_encode(array("result" => "1","message" => "手机号码或验证码为空"));
 			return $str;
