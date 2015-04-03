@@ -9,9 +9,10 @@
  */
 
 //开户session
-if( isset($_COOKIE[session_name()]) && $_COOKIE[session_name()] )
+if(1 || isset($_COOKIE[session_name()]) && $_COOKIE[session_name()] )
 {
-	session_id($_COOKIE[session_name()]);
+	//session_id($_COOKIE[session_name()]);
+	session_id('e360893ce15d730c9febeac2a671cea5');
 }
 
 if(!isset($_SESSION))
@@ -27,7 +28,7 @@ if(!isset($_SESSION))
 class ISession
 {
 	//session前缀
-	private static $pre='iweb_';
+	private static $pre='kz_';
 
 	//安全级别
 	private static $level = 'normal';
