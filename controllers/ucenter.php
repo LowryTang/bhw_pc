@@ -191,6 +191,11 @@ class Ucenter extends IController
 	{
 		$op    = IFilter::act(IReq::get('op'));
 		$id    = IFilter::act( IReq::get('order_id'),'int' );
+		$terminal    = IFilter::act(IReq::get('mobile_call'));
+		$user_id    = IFilter::act( IReq::get('user_id'),'int' );
+		if(!isset($user_id)){
+			$user_id = $this->user['user_id'];
+		}
 		$model = new IModel('order');
 
 		switch($op)
@@ -198,7 +203,7 @@ class Ucenter extends IController
 			case "cancel":
 			{
 				$model->setData(array('status' => 3));
-				if($model->update("id = ".$id." and distribution_status = 0 and status = 1 and user_id = ".$this->user['user_id']))
+				if($model->update("id = ".$id." and distribution_status = 0 and status = 1 and user_id = ".$user_id))
 				{
 					//修改红包状态
 					$prop_obj = $model->getObj('id='.$id,'prop');
@@ -208,6 +213,18 @@ class Ucenter extends IController
 						$prop = new IModel('prop');
 						$prop->setData(array('is_close'=>0));
 						$prop->update('id='.$prop_id);
+						if($terminal == true){
+							$ret = array('success' => true);
+							$ret = json_encode($ret);
+							echo $ret;
+							return $ret;
+						}
+					}
+					if($terminal == true){
+						$ret = array('success' => true);
+						$ret = json_encode($ret);
+						echo $ret;
+						return $ret;
 					}
 				}
 			}
@@ -216,16 +233,27 @@ class Ucenter extends IController
 			case "confirm":
 			{
 				$model->setData(array('status' => 5,'completion_time' => date('Y-m-d h:i:s')));
-				if($model->update("id = ".$id." and distribution_status = 1 and user_id = ".$this->user['user_id']))
+				if($model->update("id = ".$id." and distribution_status = 1 and user_id = ".$user_id))
 				{
 					$orderRow = $model->getObj('id = '.$id);
 
 					//确认收货后进行支付
-					Order_Class::updateOrderStatus($orderRow['order_no']);
+					$flag = Order_Class::updateOrderStatus($orderRow['order_no']);
 
 		    		//增加用户评论商品机会
 		    		Order_Class::addGoodsCommentChange($id);
 
+					//手机终端返回结果
+					if($terminal == true){
+						if($flag == false){
+							$ret = array('success' => false);
+						}else{
+							$ret = array('success' => true);
+						}
+						$ret = json_encode($ret);
+						echo $ret;
+						return $ret;
+					}
 		    		//确认收货以后直接跳转到评论页面
 		    		$this->redirect('evaluation');
 				}
