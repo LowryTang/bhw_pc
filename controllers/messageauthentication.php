@@ -75,6 +75,8 @@ class Messageauthentication extends IController{
 		$key = self::$prefix.$tel;
 		$ret = ISession::set($key,$arrCode);
 		//$strMessage = "您的验证码是#".$strRand."#。如非本人操作，请忽略本短信";
+		$siteConfigObj = new Config("site_config");
+		$site_config   = $siteConfigObj->getInfo();
 		$company = isset($site_config['message_company_conf']) ? $site_config['message_company_conf'] : '百花味';
 		$strMessage = "#company#=".$company."&#code#=".$strRand;
 		//发送验证码到手机
