@@ -9,15 +9,16 @@
  */
 
 //开户session
-if(1 || isset($_COOKIE[session_name()]) && $_COOKIE[session_name()] )
-{
-	//session_id($_COOKIE[session_name()]);
+if(isset($_COOKIE[session_name()]) && $_COOKIE[session_name()] ){
+	session_id($_COOKIE[session_name()]);
+	//session_id('e360893ce15d730c9febeac2a671cea5');
+}else{
 	session_id('e360893ce15d730c9febeac2a671cea5');
 }
 
 if(!isset($_SESSION))
 {
-	session_start();
+	//session_start();
 }
 
 /**
@@ -66,8 +67,8 @@ class ISession
 	 */
 	public static function set($name,$value='')
 	{
-		self::$pre = self::getPre();
-		if(self::checkSafe()==-1) $_SESSION[self::$pre.'safecode']=self::sessionId();
+		//self::$pre = self::getPre();
+		//if(self::checkSafe()==-1) $_SESSION[self::$pre.'safecode']=self::sessionId();
 		$_SESSION[self::$pre.$name]=$value;
 	}
     /**
@@ -77,6 +78,7 @@ class ISession
      */
 	public static function get($name)
 	{
+		return isset($_SESSION[self::$pre.$name])?$_SESSION[self::$pre.$name]:null;
 		self::$pre  = self::getPre();
 		$is_checked = self::checkSafe();
 
@@ -113,6 +115,7 @@ class ISession
      */
 	private static function checkSafe()
 	{
+		return 1;
 		self::$pre = self::getPre();
 		if(isset($_SESSION[self::$pre.'safecode']))
 		{
