@@ -18,7 +18,7 @@ if(isset($_COOKIE[session_name()]) && $_COOKIE[session_name()]){
 
 if(!isset($_SESSION))
 {
-	//session_start();
+	session_start();
 }
 
 /**
