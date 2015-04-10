@@ -68,12 +68,28 @@ class Messageauthentication extends IController{
 		$strRand = implode('',$arrRand);
 		$arrCode = array(
 			"tel" => $tel,
+			"class" => 'registration',
 			"code" => $strRand,
-			"startTime" => strtotime('now')
+			"create_time" => strtotime('now')
 		);
+		$objCode   = new IModel("verification_code");
+		$objCode->setData($arrCode);
+		$intId = $objCode->add();
+		if(!$intId){
+			$result = array(
+					"success" => false,
+					"message" => array(
+						"code" => 1,
+						"msg" => "生成验证码失败"
+					)
+			);
+			$result = json_encode($result);
+			echo $result;
+			return $result;
+		}
 		//将手机验证码存入session
-		$key = self::$prefix.$tel;
-		$ret = ISession::set($key,$arrCode);
+		//$key = self::$prefix.$tel;
+		//$ret = ISession::set($key,$arrCode);
 		//$strMessage = "您的验证码是#".$strRand."#。如非本人操作，请忽略本短信";
 		$siteConfigObj = new Config("site_config");
 		$site_config   = $siteConfigObj->getInfo();
@@ -101,21 +117,25 @@ class Messageauthentication extends IController{
 			$str = json_encode(array("result" => "1","message" => "手机号码或验证码为空"));
 			return $str;
 		}
-		$arrCode = ISession::get(self::$prefix.$tel);
+		//$arrCode = ISession::get(self::$prefix.$tel);
+		$objCode = new IModel('verification_code');
+		$strSql = "tel ='".$tel."' and class = 'registration' ORDER BY `id` DESC";
+		$arrCode = $objCode->query($strSql);
 		if(empty($arrCode) || !is_array($arrCode)){
 			$str = json_encode(array("result" => "1","message" => "该手机尚未发送验证码"));
 			return $str;
 		}
+		$arrCode = $arrCode[0];
 		//验证手机号码、手机验证码、验证码有效期
-		$interval = strtotime('now') - $arrCode['startTime'];
+		$interval = strtotime('now') - $arrCode['create_time'];
 		if(($tel == $arrCode['tel']) && ($code == $arrCode['code']) && ($interval <= self::$expireTime)){
 			//验证通过后删除session，防止多次验证
-			ISession::clear(self::$prefix.$tel);
+			//ISession::clear(self::$prefix.$tel);
 			$str = json_encode(array("result" => "0","message" => "验证码正确"));
 			return $str;
 		}elseif(($tel == $arrCode['tel']) && ($code == $arrCode['code'])){
 			//清除过期的session
-			ISession::clear(self::$prefix.$tel);
+			//ISession::clear(self::$prefix.$tel);
 			$str = json_encode(array("result" => "1","message" => "验证码超时"));
 			return $str;
 		}else{
@@ -135,21 +155,25 @@ class Messageauthentication extends IController{
 			$str = json_encode(array("result" => "1","message" => "手机号码或验证码为空"));
 			return $str;
 		}
-		$arrCode = ISession::get(self::$prefix.$tel);
+		//$arrCode = ISession::get(self::$prefix.$tel);
+		$objCode = new IModel('verification_code');
+		$strSql = "tel ='".$tel."' and class = 'registration' ORDER BY `id` DESC";
+		$arrCode = $objCode->query($strSql);
 		if(empty($arrCode) || !is_array($arrCode)){
 			$str = json_encode(array("result" => "1","message" => "该手机尚未发送验证码"));
 			return $str;
 		}
+		$arrCode = $arrCode[0];
 		//验证手机号码、手机验证码、验证码有效期
-		$interval = strtotime('now') - $arrCode['startTime'];
+		$interval = strtotime('now') - $arrCode['create_time'];
 		if(($tel == $arrCode['tel']) && ($code == $arrCode['code']) && ($interval <= self::$expireTime)){
 			//验证通过后删除session，防止多次验证
-			ISession::clear(self::$prefix.$tel);
+			//ISession::clear(self::$prefix.$tel);
 			$str = json_encode(array("result" => "0","message" => "验证码正确"));
 			return $str;
 		}elseif(($tel == $arrCode['tel']) && ($code == $arrCode['code'])){
 			//清除过期的session
-			ISession::clear(self::$prefix.$tel);
+			//ISession::clear(self::$prefix.$tel);
 			$str = json_encode(array("result" => "1","message" => "验证码超时"));
 			return $str;
 		}else{
@@ -256,13 +280,29 @@ class Messageauthentication extends IController{
 		$strRand = implode('',$arrRand);
 		$arrCode = array(
 			"tel" => $tel,
+			"class" => 'forget_password',
 			"code" => $strRand,
-			"startTime" => strtotime('now')
+			"create_time" => strtotime('now')
 		);
 		//将手机验证码存入session
-		$key = self::$forgetPasswordPrefix.$tel;
-		ISession::set($key,$arrCode);
+		//$key = self::$forgetPasswordPrefix.$tel;
+		//ISession::set($key,$arrCode);
 		//$strMessage = "您的验证码是#".$strRand."#。如非本人操作，请忽略本短信";
+		$objCode   = new IModel("verification_code");
+		$objCode->setData($arrCode);
+		$intId = $objCode->add();
+		if(!$intId){
+			$result = array(
+				"success" => false,
+				"message" => array(
+					"code" => 1,
+					"msg" => "生成验证码失败"
+				)
+			);
+			$result = json_encode($result);
+			echo $result;
+			return $result;
+		}
 		$site_config=new Config("site_config");
 		$site_config=$site_config->getInfo();
 		$company = isset($site_config['message_company_conf']) ? $site_config['message_company_conf'] : '百花味';
@@ -284,21 +324,25 @@ class Messageauthentication extends IController{
 			$str = json_encode(array("result" => "1","message" => "手机号码或验证码为空"));
 			return $str;
 		}
-		$arrCode = ISession::get(self::$forgetPasswordPrefix.$tel);
+		//$arrCode = ISession::get(self::$forgetPasswordPrefix.$tel);
+		$objCode = new IModel('verification_code');
+		$strSql = "tel ='".$tel."' and class = 'forget_password' ORDER BY `id` DESC";
+		$arrCode = $objCode->query($strSql);
 		if(empty($arrCode) || !is_array($arrCode)){
 			$str = json_encode(array("result" => "1","message" => "该手机尚未发送验证码"));
 			return $str;
 		}
+		$arrCode = $arrCode[0];
 		//验证手机号码、手机验证码、验证码有效期
-		$interval = strtotime('now') - $arrCode['startTime'];
+		$interval = strtotime('now') - $arrCode['create_time'];
 		if(($tel == $arrCode['tel']) && ($code == $arrCode['code']) && ($interval <= self::$expireTime)){
 			//验证通过后删除session，防止多次验证
-			ISession::clear(self::$forgetPasswordPrefix.$tel);
+			//ISession::clear(self::$forgetPasswordPrefix.$tel);
 			$str = json_encode(array("result" => "0","message" => "验证码正确"));
 			return $str;
 		}elseif(($tel == $arrCode['tel']) && ($code == $arrCode['code'])){
 			//清除过期的session
-			ISession::clear(self::$forgetPasswordPrefix.$tel);
+			//ISession::clear(self::$forgetPasswordPrefix.$tel);
 			$str = json_encode(array("result" => "1","message" => "验证码超时"));
 			return $str;
 		}else{

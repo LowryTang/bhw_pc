@@ -42,10 +42,12 @@ class IController extends IControllerBase
 	{
 		$this->module = $module;
 		$this->ctrlId = $controllerId;
+		/*
 		$boolMobileCall = IReq::get("mobile_call");
 		if($boolMobileCall){
 			$GLOBALS['mobile_call'] = true;
 		}
+		*/
 		//初始化lang方案
 		$this->lang = $this->module->language;
 	}

@@ -9,7 +9,7 @@
  */
 
 //开户session
-if(isset($_COOKIE[session_name()]) && $_COOKIE[session_name()] && !isset($GLOBALS['mobile_call'])){
+if(isset($_COOKIE[session_name()]) && $_COOKIE[session_name()]){
 	session_id($_COOKIE[session_name()]);
 	//session_id('e360893ce15d730c9febeac2a671cea5');
 }else{
