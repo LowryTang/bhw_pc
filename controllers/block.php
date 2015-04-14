@@ -41,18 +41,24 @@ class Block extends IController
 		//商品检索条件
 		$show_num    = IFilter::act( IReq::get('show_num'),'int');
 		$keywords    = IFilter::act( IReq::get('keywords') );
-		$cat_id      = IFilter::act( IReq::get('category_id'),'int' );
-		$min_price   = IFilter::act( IReq::get('min_price'),'float' );
-		$max_price   = IFilter::act( IReq::get('max_price'),'float' );
-		$goods_no    = IFilter::act( IReq::get('goods_no') );
-		$is_products = IFilter::act( IReq::get('is_products'),'int' );
+		$cat_id      = IFilter::act( IReq::get('category_id'),'int');
+		$min_price   = IFilter::act( IReq::get('min_price'),'float');
+		$max_price   = IFilter::act( IReq::get('max_price'),'float');
+		$goods_no    = IFilter::act( IReq::get('goods_no'));
+		$is_products = IFilter::act( IReq::get('is_products'),'int');
 		$seller_id   = IFilter::act( IReq::get('seller_id'),'int');
+		$goods_id    = IFilter::act( IReq::get('goods_id'),'int');
 
 		//查询条件
-		$where      = 'go.is_del = 0';
+		$where = 'go.is_del = 0';
+		if($goods_id)
+		{
+			$where .= ' and go.id = '.$goods_id;
+		}
+
 		if($seller_id)
 		{
-			$where .= ' and seller_id = '.$seller_id;
+			$where .= ' and go.seller_id = '.$seller_id;
 		}
 		$table_name = 'goods as go';
 		$fields     = 'go.id as goods_id,go.name,go.img,go.store_nums';

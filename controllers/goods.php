@@ -878,17 +878,32 @@ class Goods extends IController
 	 */
 	public function collect_goods()
 	{
-		$collect_name = IFilter::act(IReq::get('collect_name'));
-		$url          = IFilter::act(IReq::get('url'));
-		$num          = IFilter::act(IReq::get('num'),'int');
+		$category = IFilter::act(IReq::get('category'),'int');
+		$url      = IFilter::act(IReq::get('url'));
+		$start    = IFilter::act(IReq::get('start'),'int');
+		$end      = IFilter::act(IReq::get('end'),'int');
+		$urlType  = IFilter::act(IReq::get('urlType'),'int');
 
 		if($url)
 		{
+			//设置要插入的分类
+			collect_facade::$category = $category;
+
 			foreach($url as $key => $val)
 			{
 				if($val)
 				{
-					$result = collect_facade::run($collect_name,$val,$num);
+					//单品采集
+					if($urlType == 1)
+					{
+						$result = collect_facade::once($val);
+					}
+					//列表采集
+					else
+					{
+						$result = collect_facade::many($val,$start,$end);
+					}
+
 					if($result['result'] == 'fail')
 					{
 						die($result['msg']);
@@ -902,10 +917,9 @@ class Goods extends IController
 	//采集商品详情页面
 	public function collect_goods_detail()
 	{
-		$collectType = IFilter::act(IReq::get('collectType'));
 		$collectUrl  = IFilter::act(IReq::get('collectUrl'),'url');
-		$result      = collect_facade::runDetail($collectType,$collectUrl);
-		if($result['result'] == 'success')
+		$result      = collect_facade::runDetail($collectUrl);
+		if(isset($result['result']) && $result['result'] == 'success')
 		{
 			die(JSON::encode( array('result' => 'success','data' => $result['data']) ));
 		}
@@ -1039,5 +1053,22 @@ class Goods extends IController
 
 		}
 		die( JSON::encode($result) );
+	}
+
+	//商品共享
+	public function goods_share()
+	{
+		$idArray = explode(',',IReq::get('id'));
+		$id      = IFilter::act($idArray,'int');
+
+		$goodsDB = new IModel('goods');
+		$goodsData = $goodsDB->query('id in ('.join(',',$id).')');
+
+		foreach($goodsData as $key => $val)
+		{
+			$is_share = $val['is_share'] == 1 ? 0 : 1;
+			$goodsDB->setData(array('is_share' => $is_share));
+			$goodsDB->update('id = '.$val['id'].' and seller_id = 0');
+		}
 	}
 }

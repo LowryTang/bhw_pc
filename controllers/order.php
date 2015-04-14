@@ -181,7 +181,7 @@ class Order extends IController
 	 	{
 	 		$tb_delivery = new IQuery('delivery_doc as c ');
 	 		$tb_delivery->join=' left join order as o on c.order_id=o.id left join delivery as p on c.delivery_type = p.id left join user as u on u.id = c.user_id';
-	 		$tb_delivery->fields = 'o.order_no,c.order_id,p.name as pname,o.create_time,u.username,c.name,c.province,c.city,c.area,c.address,c.mobile,c.telphone,c.postcode,c.freight,c.delivery_code,c.time,c.note ';
+	 		$tb_delivery->fields = 'c.id as id,o.order_no,c.order_id,p.name as pname,o.create_time,u.username,c.name,c.province,c.city,c.area,c.address,c.mobile,c.telphone,c.postcode,c.freight,c.delivery_code,c.time,c.note ';
 	 		$tb_delivery->where = 'c.id='.$delivery_id;
 	 		$delivery_info = $tb_delivery->find();
 	 		if($delivery_info)

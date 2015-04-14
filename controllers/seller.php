@@ -823,4 +823,84 @@ class Seller extends IController
 		}
 		$this->redirect('refundment_list');
 	}
+
+	//商品复制
+	function goods_copy()
+	{
+		$idArray = explode(',',IReq::get('id'));
+		$idArray = IFilter::act($idArray,'int');
+
+		$goodsDB     = new IModel('goods');
+		$goodsAttrDB = new IModel('goods_attribute');
+		$goodsPhotoRelationDB = new IModel('goods_photo_relation');
+		$productsDB = new IModel('products');
+
+		$goodsData = $goodsDB->query('id in ('.join(',',$idArray).') and is_share = 1 and is_del = 0 and seller_id = 0','*');
+		if($goodsData)
+		{
+			foreach($goodsData as $key => $val)
+			{
+				//判断是否重复
+				if( $goodsDB->getObj('seller_id = '.$this->seller['seller_id'].' and name = "'.$val['name'].'"') )
+				{
+					die('商品不能重复复制');
+				}
+
+				$oldId = $val['id'];
+
+				//商品数据
+				unset($val['id'],$val['visit'],$val['favorite'],$val['sort'],$val['comments'],$val['sale'],$val['grade'],$val['is_share']);
+				$val['seller_id'] = $this->seller['seller_id'];
+				$val['goods_no'] .= '-'.$this->seller['seller_id'];
+
+				$goodsDB->setData($val);
+				$goods_id = $goodsDB->add();
+
+				//商品属性
+				$attrData = $goodsAttrDB->query('goods_id = '.$oldId);
+				if($attrData)
+				{
+					foreach($attrData as $k => $v)
+					{
+						unset($v['id']);
+						$v['goods_id'] = $goods_id;
+						$goodsAttrDB->setData($v);
+						$goodsAttrDB->add();
+					}
+				}
+
+				//商品图片
+				$photoData = $goodsPhotoRelationDB->query('goods_id = '.$oldId);
+				if($photoData)
+				{
+					foreach($photoData as $k => $v)
+					{
+						unset($v['id']);
+						$v['goods_id'] = $goods_id;
+						$goodsPhotoRelationDB->setData($v);
+						$goodsPhotoRelationDB->add();
+					}
+				}
+
+				//货品
+				$productsData = $productsDB->query('goods_id = '.$oldId);
+				if($productsData)
+				{
+					foreach($productsData as $k => $v)
+					{
+						unset($v['id']);
+						$v['products_no'].= '-'.$this->seller['seller_id'];
+						$v['goods_id']    = $goods_id;
+						$productsDB->setData($v);
+						$productsDB->add();
+					}
+				}
+			}
+			die('success');
+		}
+		else
+		{
+			die('复制的商品不存在');
+		}
+	}
 }

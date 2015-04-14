@@ -660,6 +660,7 @@ class Member extends IController
 		$account     = IFilter::act(IReq::get('account'));
 		$server_num  = IFilter::act(IReq::get('server_num'));
 		$home_url    = IFilter::act(IReq::get('home_url'));
+		$sort        = IFilter::act(IReq::get('sort'),'int');
 
 		if(!$seller_id && $password == '')
 		{
@@ -707,6 +708,7 @@ class Member extends IController
 			'area'      => $area,
 			'server_num'=> $server_num,
 			'home_url'  => $home_url,
+			'sort'      => $sort,
 		);
 
 		//商户资质上传
