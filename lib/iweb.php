@@ -1,9 +1,9 @@
 <?php
 /**
- * @copyright Copyright(c) 2010 baihuawei.com
+ * @copyright Copyright(c) 2010 www.baihuawei.com
  * @file iweb.php
  * @brief 引用内核入口文件
- * @author chendeshan
+ * @author Clark
  * @date 2010-12-02
  * @version 1.4.1
  */
@@ -81,11 +81,16 @@ class IWeb
                 foreach(self::$_classes as $classPath)
                 {
                     $filePath = self::parseAlias($classPath).strtolower( $className ) .'.php';
-                    if(is_file($filePath))
+                    if(!is_file($filePath))
                     {
-                        include($filePath);
-                        return true;
+                    	$filePath = self::parseAlias($classPath).$className.'.php';
                     }
+
+                    if(is_file($filePath))
+                	{
+	                    include($filePath);
+	                    return true;
+                	}
                 }
             }
 		}
@@ -110,14 +115,10 @@ class IWeb
      */
     public static function setClasses($classes)
     {
-    	if(is_string($classes))
-    	{
-    		self::$_classes[] = $classes;
-    	}
-    	else if(is_array($classes))
-    	{
-    		self::$_classes += $classes;
-    	}
+	    if(is_string($classes) || is_array($classes))
+	    {
+	        self::$_classes = array_merge(self::$_classes, (array)$classes);
+	    }
     }
     /**
      * 设置当前框架正在运行的应用

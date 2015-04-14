@@ -1,108 +1,12 @@
 <?php
 /**
- * @copyright (c) 2011 baihuawei.com
+ * @copyright (c) 2011 www.baihuawei.com
  * @file exception_class.php
  * @brief 异常处理
- * @author walu
+ * @author Michelle
  * @date 2011-07-22
  * @version 0.1
  */
-if( !class_exists('Exception') )
-{
-
-	/**
-	 * 在php5.1之前，通过php代码中模拟Exception类
-	 */
-	class Exception
-	{
-		/**
-		 * 异常信息
-		 * @var mixed
-		 */
-		protected $message = 'Unknown exception';
-
-		/**
-		 * 用户自定义的异常代码
-		 * @var mixed
-		 */
-		protected $code = 0;
-
-		/**
-		 * 发生异常的文件名
-		 * @var string
-		 */
-		protected $file;
-
-		/**
-		 * 发生异常的代码行号
-		 * @var int
-		 */
-		protected $line;
-
-		private $backtrace;
-
-		/**
-		 * 返回异常信息
-		 * @return mixed
-		 * @final
-		 */
-	    final function getMessage()
-		{
-			return $this->message;
-		}
-
-		/**
-		 * 返回异常代码
-		 * @return mixed
-		 * @final
-		 */
-	    final function getCode()
-		{
-			return $this->code;
-		}
-
-		/**
-		 * 返回发生异常的文件名
-		 * @return string
-		 * @final
-		 */
-	    final function getFile()
-		{
-			return $this->file;
-		}
-
-		/**
-		 * 返回发生异常的代码行号
-		 * 如果php version小于5.1，则只能返回抛出异常的行号
-		 * @return int
-		 * @final
-		 */
-	    final function getLine()
-		{
-			return $this->line;
-		}
-
-	    /**
-		 * 返回完整的debug_backtrace数组
-		 * @return array
-		 * @final
-		 */
-		final function getTrace()
-		{
-			return $this->backtrace;
-		}
-
-		/**
-		 * 返回已经格式化为html字符串的debug_backtrace信息
-		 * @return string
-		 * @final
-		 */
-	    final function getTraceAsString()
-		{}
-	}
-}
-
-
 class IException extends Exception
 {
 	private static $logPath = false;
@@ -116,12 +20,6 @@ class IException extends Exception
 	public function __construct($message = null, $code = 0)
 	{
 		$bt = debug_backtrace();
-		//抛弃这一层，用上一层的
-		foreach($bt as $key=>$value)
-		{
-			//unset($bt[$key]);
-			break;
-		}
 		$info = reset($bt);
 		if($info !== false)
 		{
@@ -150,27 +48,21 @@ class IException extends Exception
 		$e->show();
 	}
 
-	public static function phpError($errno , $errstr,$errfile=false ,$errline=false,$errcontext=false   )
+	public static function phpError($errno,$errstr,$errfile=false,$errline=false,$errcontext=false)
 	{
 		$errfile = self::pathFilter($errfile);
-		$re = "<ERROR_INFO>\n";
+		$re  = "<ERROR_INFO>\n";
 		$re .= "errID:{$errno}\n";
 		$re .= "errStr:{$errstr}\n";
 		$re .= "errFile:{$errfile}\n";
 		$re .= "errLine:{$errline}\n";
 		$re .= "errTime:".date("y-m-d H:i:s")."\n";
-		if(is_array($errcontext))
-		{
-			$re .= "##出错时变量的值：##\n";
-			$re .= var_export($errcontext,true)."\n";
-		}
 		$re .= "<\ERROR_INFO>\n";
 
 		self::logError($re);
 		if( self::$debugMode )
 		{
-			echo $re;
-			exit;
+			die($re);
 		}
 	}
 
@@ -217,8 +109,7 @@ class IException extends Exception
 
 		if( self::$debugMode )
 		{
-			echo $re;
-			exit;
+			die($re);
 		}
 	}
 
