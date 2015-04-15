@@ -31,7 +31,7 @@ class csvimport_facade
 		}
 
 		//处理上传
-		$uploadInstance = new IUpload(50000,array('zip'));
+		$uploadInstance = new IUpload(1000000,array('zip'));
 		$uploadCsvDir   = 'runtime/cvs/'.date('Ymd');
 		$uploadInstance->setDir($uploadCsvDir);
 		$result = $uploadInstance->execute();

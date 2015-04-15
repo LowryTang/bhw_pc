@@ -107,24 +107,31 @@ class Common
 
 	/**
 	 * @brief 检查皮肤方案是否被应用
+	 * @param string $theme 主题名称
 	 * @param string $plan 方案名称
 	 * @return boolean
 	 */
-	public static function isSkinUsed($plan)
+	public static function isSkinUsed($theme,$plan)
 	{
-		if(isset(IWeb::$app->config['skin']))
+		$client     = '';
+		$selectPlan = '';
+
+		foreach(IWeb::$app->config['theme'] as $key => $val)
 		{
-			if(is_array(IWeb::$app->config['skin']))
+			if($theme == $val)
 			{
-				if(in_array($plan,IWeb::$app->config['skin']))
-				{
-					return true;
-				}
+				$client = $key;
 			}
-			elseif(IWeb::$app->config['skin'] == $plan)
-			{
-				return true;
-			}
+		}
+
+		if($client)
+		{
+			$selectPlan = IWeb::$app->config['skin'][$client];
+		}
+
+		if($plan == $selectPlan)
+		{
+			return true;
 		}
 		return false;
 	}

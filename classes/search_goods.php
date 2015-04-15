@@ -207,6 +207,7 @@ class search_goods
 		//获取配置信息
 		$siteConfigObj = new Config("site_config");
 		$site_config   = $siteConfigObj->getInfo();
+		$orderArray    = array();//排序
 
 		//开始查询
 		$goodsObj = new IQuery("goods as go");
@@ -291,14 +292,39 @@ class search_goods
 					//搜索词模糊
 					else if($key == 'search')
 					{
-						$wordWhere = array(' name like "%'.$defaultWhere['search'].'%" or find_in_set("'.$defaultWhere['search'].'",search_words) ');
-						$wordData = words_facade::run($defaultWhere['search']);
-						if(isset($wordData['data']) && count($wordData['data']) >= 2)
+						$wordWhere     = array();
+						$wordLikeOrder = array();
+
+						//检查输入的内容是否为分词形式
+						if(preg_match("#\s+#",$defaultWhere['search']) == false)
 						{
-							foreach($wordData['data'] as $word)
+							$wordWhere[]     = ' name like "%'.$defaultWhere['search'].'%" or find_in_set("'.$defaultWhere['search'].'",search_words) ';
+							$wordLikeOrder[] = $defaultWhere['search'];
+						}
+
+						//进行分词
+						if(IString::getStrLen($defaultWhere['search']) >= 4 || IString::getStrLen($defaultWhere['search']) <= 100)
+						{
+							$wordData = words_facade::run($defaultWhere['search']);
+							if(isset($wordData['data']) && count($wordData['data']) >= 2)
 							{
-								$wordWhere[] = ' name like "%'.$word.'%" ';
+								foreach($wordData['data'] as $word)
+								{
+									$wordWhere[]     = ' name like "%'.$word.'%" ';
+									$wordLikeOrder[] = $word;
+								}
 							}
+						}
+
+						//分词排序
+						if(count($wordLikeOrder) > 1)
+						{
+							$orderTempArray = array();
+							foreach($wordLikeOrder as $key => $val)
+							{
+								$orderTempArray[] = "(CASE WHEN name LIKE '%".$val."%' THEN ".$key." ELSE 100 END)";
+							}
+							$orderArray[] = " (".join('+',$orderTempArray).") asc ";
 						}
 						$goodsCondArray[] = join(' or ',$wordWhere);
 					}
@@ -415,40 +441,41 @@ class search_goods
 			//销售量
 			case "sale":
 			{
-				$goodsObj->order = ' go.sale '.$asc;
+				$orderArray[] = ' go.sale '.$asc;
 			}
 			break;
 
 			//评分
 			case "cpoint":
 			{
-				$goodsObj->order = ' go.grade '.$asc;
+				$orderArray[] = ' go.grade '.$asc;
 			}
 			break;
 
 			//最新上架
 			case "new":
 			{
-				$goodsObj->order = ' go.id '.$asc;
+				$orderArray[] = ' go.id '.$asc;
 			}
 			break;
 
 			//价格
 			case "price":
 			{
-				$goodsObj->order = ' go.sell_price '.$asc;
+				$orderArray[] = ' go.sell_price '.$asc;
 			}
 			break;
 
 			//根据排序字段
 			default:
 			{
-				$goodsObj->order = 'go.sort asc';
+				$orderArray[] = ' go.sort asc ';
 			}
 		}
 
 		//设置IQuery类的各个属性
 		$goodsObj->where = $where;
+		$goodsObj->order = join(',',$orderArray);
 		return $goodsObj;
 	}
 }
