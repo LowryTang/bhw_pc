@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2014 baihuawei.com
+ * @copyright (c) 2014 www.baihuawei.com
  * @file words_facade.php
  * @brief 分词类
  * @author dabao
@@ -24,8 +24,11 @@ class words_facade
 				default:
 				{
 					$classFile = IWeb::$app->getBasePath().'plugins/words/scws.php';
-					include_once($classFile);
-					self::$instance = new scws();
+					if(is_file($classFile))
+					{
+						include_once($classFile);
+						self::$instance = new scws();
+					}
 				}
 				break;
 			}
@@ -41,7 +44,11 @@ class words_facade
 	public static function run($content)
 	{
 		$instance = self::createInstance();
-		return $instance->run($content);
+		if($instance)
+		{
+			return $instance->run($content);
+		}
+		return $content;
 	}
 }
 

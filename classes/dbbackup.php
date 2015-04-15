@@ -94,11 +94,15 @@ class DBBackup
 	//执行恢复
 	function runRes()
 	{
+		//忽略外键约束
+		$this->query("SET FOREIGN_KEY_CHECKS = 0;");
 		foreach($this->ctrlRes as $val)
 		{
 			$fileName = $this->dir.'/'.$val;
 			$this->parseSQL($fileName);
 		}
+		//开启外键约束
+		$this->query("SET FOREIGN_KEY_CHECKS = 1;");
 	}
 
 	//解析备份文件中的SQL

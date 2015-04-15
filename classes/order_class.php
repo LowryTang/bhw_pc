@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2011 baihuawei.com
+ * @copyright (c) 2011 www.baihuwei.com
  * @file Order_Class.php
  * @brief 订单中相关的
  * @author relay
@@ -426,7 +426,7 @@ class Order_Class
 	/**
 	 * 获取订单状态
 	 * @param $orderRow array('status' => '订单状态','pay_type' => '支付方式ID','distribution_status' => '配送状态','pay_status' => '支付状态')
-	 * @return int 订单状态值 0:未知; 1:未付款等待发货(货到付款); 2:等待付款(线上支付); 3:已发货(未付款+已付款); 4:已付款等待发货; 5:已取消; 6:已完成(已付款,已收货); 7:已退款; 8:部分发货(不需要付款); 9:部分退款(未发货+部分发货); 10:部分退款(已发货);
+	 * @return int 订单状态值 0:未知; 1:未付款等待发货(货到付款); 2:等待付款(线上支付); 3:已发货(已付款); 4:已付款等待发货; 5:已取消; 6:已完成(已付款,已收货); 7:已退款; 8:部分发货(不需要付款); 9:部分退款(未发货+部分发货); 10:部分退款(已发货); 11:已发货(未付款);
 	 */
 	public static function getOrderStatus($orderRow)
 	{
@@ -442,7 +442,7 @@ class Order_Class
 				}
 				else if($orderRow['distribution_status'] == 1)
 				{
-					return 3;
+					return 11;
 				}
 				else if($orderRow['distribution_status'] == 2)
 				{
@@ -581,6 +581,7 @@ class Order_Class
 			8 => '部分发货',
 			9 => '部分发货',
 			10=> '部分退款',
+			11=> '已发货',
 		);
 		return isset($result[$statusCode]) ? $result[$statusCode] : '';
 	}

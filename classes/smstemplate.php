@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2011 baihuawei.com
+ * @copyright (c) 2011 www.baihuawei.com
  * @file smstemplate.php
  * @brief 短信发送模板
  * @author chendeshan

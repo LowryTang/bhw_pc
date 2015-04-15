@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Copyright(c) 2011 baihuawei.com
+ * @copyright Copyright(c) 2011 www.baihuawei.com
  * @file menu.php
  * @brief 后台系统菜单管理
  * @author webning
@@ -62,11 +62,8 @@ class Menu
 				'/comment/comment_list'		=> '评价管理',
 				'/comment/message_list'		=> '站内消息',
 				'/message/notify_list'      => '到货通知',
+				'/message/registry_list'    => '邮件订阅',
 			),
-			'邮件短信设置'=>array(
-				'/message/tpl_list'		=>	'模板管理',
-				'/message/registry_list'=>	'邮件订阅'
-			)
 		),
 
 	   '订单'=>array(
@@ -189,8 +186,6 @@ class Menu
 		'/member/recycling' => '/member/member_list',
 
 		'/tools/article_edit_act'=>'/tools/article_list',
-
-		'/message/notify_filter' =>'/message/notify_list',
 
 		'/market/ticket_edit' => '/market/ticket_list',
 		'/market/bill_edit' => '/market/bill_list',

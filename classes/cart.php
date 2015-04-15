@@ -12,7 +12,7 @@
  * @class Cart
  * @brief 购物车类库
  */
-class Cart
+class Cart extends IInterceptorBase
 {
 	/*购物车简单cookie存储结构
 	* array [goods]=>array(商品主键=>数量) , [product]=>array( 货品主键=>数量 )
@@ -265,6 +265,13 @@ class Cart
 			ICookie::clear($cartName);
 		}
 	}
+
+
+	//清空购物车拦截器 解决cookie header头延迟发送问题
+		public static function onFinishAction(){
+			$cartObj = new Cart();						
+			$cartObj->clear();
+		}
 
 	//写入购物车
 	public function setMyCart($goodsInfo)
