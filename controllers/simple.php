@@ -1058,8 +1058,9 @@ class Simple extends IController
 			$goodsResult = $countSumObj->cart_count();
 
 			//清空购物车
-	    	$cartObj = new Cart();
-	    	$cartObj->clear();
+	    	//$cartObj = new Cart();
+	    	//$cartObj->clear();
+			IInterceptor::reg("cart@onFinishAction");
     	}
 
     	//判断商品商品是否存在

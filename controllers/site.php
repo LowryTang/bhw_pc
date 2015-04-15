@@ -37,7 +37,7 @@ class Site extends IController
 		$this->word = IFilter::act(IReq::get('word'),'text');
 		$cat_id     = IFilter::act(IReq::get('cat'),'int');
 
-		if(preg_match("|^[\w\x7f-\xff]+$|",$this->word))
+		if(preg_match("|^[\w\x7f\s*-\xff*]+$|",$this->word))
 		{
 			//搜索关键字
 			$tb_sear     = new IModel('search');

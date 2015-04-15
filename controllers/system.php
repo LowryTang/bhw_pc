@@ -1325,8 +1325,13 @@ class System extends IController
     	//修改
     	else
     	{
-    		$area_sort  = $area_sort ? $area_sort : 99;
-    		$updateData = array('area_name' => $area_name,'sort' => $area_sort);
+			$updateData = array();
+			if($area_name){
+				$updateData['area_name'] = $area_name;
+			}
+			if($area_sort){
+				$updateData['sort'] = $area_sort;
+			}
     		$areasDB->setData($updateData);
     		$areasDB->update('area_id = '.$area_id);
     	}
