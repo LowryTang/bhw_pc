@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright (c) 2011 baihuawei.com
+ * @copyright (c) 2011 bakhuawei.com
  * @file seller.php
  * @brief 商家API
  * @author chendeshan
@@ -15,5 +15,16 @@ class APISeller
 		$query = new IModel('seller');
 		$info  = $query->getObj("id=".$id);
 		return $info;
+	}
+
+	//获取商户列表
+	public function getSellerList()
+	{
+		$page = IReq::get('page') ? IFilter::act(IReq::get('page'),'int') : 1;
+		$query = new IQuery('seller');
+		$query->where = 'is_del = 0';
+		$query->order = 'id desc';
+		$query->page  = $page;
+		return $query;
 	}
 }

@@ -209,8 +209,25 @@ return array(
 	'getBrandInfo'=>array(
 	   'file' => 'brand.php','class' => 'APIBrand'
 	),
-	//取得品牌详情
+	//取得商户详情
 	'getSellerInfo'=>array(
+	   'file' => 'seller.php','class' => 'APISeller'
+	),
+	//取得商户列表
+	'getSellerInfo'=>array(
+	   'file' => 'seller.php','class' => 'APISeller'
+	),
+	//取得VIP商户列表
+	'getVipSellerList'=>array(
+	    'query'=>array(
+	    	'name'  => 'seller',
+	    	'order' => ' sort asc ',
+	    	'limit' => 10,
+	    	'where' => 'is_del = 0 and is_vip = 1',
+	    )
+	),
+	//取得VIP商户列表
+	'getSellerList'=>array(
 	   'file' => 'seller.php','class' => 'APISeller'
 	),
 	//最新评论列表
