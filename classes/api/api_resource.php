@@ -17,6 +17,21 @@ return array(
 			'where' => 'id = #id#',
 		)
 	),
+	//根据ID读广告信息
+	'getadmanageid' => array(
+		'query' => array(
+			'name' => 'ad_manage',
+			'where' => 'position_id = #position_id#',
+			'limit' => '3'
+		)
+	),
+	'getadid' => array(
+		'query' => array(
+			'name' => 'ad_manage',
+			'where' => 'position_id = #position_id#',
+			'limit' => '2,1'
+		)
+	),
 	//取文章置顶列表
 	'getArtList' => array(
 		'query' => array(
@@ -100,7 +115,19 @@ return array(
 			'name' => 'commend_goods as co',
 			'join' => 'left join goods as go on co.goods_id = go.id',
 			'where' => 'co.commend_id = 3 and go.is_del = 0 AND go.id is not null',
-			'fields' => 'go.img,go.sell_price,go.name,go.id',
+			'fields' => 'go.img,go.sell_price,go.market_price,go.name,go.id',
+			'limit'=>'10',
+			'order'=>'sort asc,id desc'
+		)
+	),
+	
+	//特价商品列表
+	'getCommendtj' => array(
+		'query' => array(
+			'name' => 'commend_goods as co',
+			'join' => 'left join goods as go on co.goods_id = go.id',
+			'where' => 'co.commend_id = 2 and go.is_del = 0 AND go.id is not null',
+			'fields' => 'go.img,go.sell_price,go.market_price,go.name,go.id',
 			'limit'=>'10',
 			'order'=>'sort asc,id desc'
 		)
@@ -111,7 +138,7 @@ return array(
 			'name' => 'commend_goods as co',
 			'join' => 'left join goods as go on co.goods_id = go.id',
 			'where' => 'co.commend_id = 4 and go.is_del = 0 AND go.id is not null',
-			'fields' => 'go.img,go.sell_price,go.name,go.id',
+			'fields' => 'go.img,go.sell_price,go.market_price,go.name,go.id,go.sale',
 			'limit'=>'10',
 			'order'=>'sort asc,id desc'
 		)
@@ -179,6 +206,18 @@ return array(
 	    	'limit' => 10,
 	    )
 	),
+	//取销量排名列表
+	'getExtendListByCategoryid'=>array(
+	    'query'=>array(
+	    	'name'  => 'category_extend as ca',
+	    	'join'  => 'left join goods as go on ca.goods_id = go.id left join order_goods as ord on ord.goods_id = go.id',
+	    	'where' => 'go.is_del = 0 and ord.goods_nums > 0',
+	    	'fields'=> 'go.id,go.name,go.img,go.sell_price,SUM(ord.goods_nums) as sum',
+		   	'order' => ' sum desc',
+		   	'group' => ' ord.goods_id',
+	    	'limit' => 10,
+	    )
+	),
 	//所有一级分类
 	'getCategoryListTop'=>array(
 	    'query'=>array(
@@ -209,25 +248,8 @@ return array(
 	'getBrandInfo'=>array(
 	   'file' => 'brand.php','class' => 'APIBrand'
 	),
-	//取得商户详情
+	//取得品牌详情
 	'getSellerInfo'=>array(
-	   'file' => 'seller.php','class' => 'APISeller'
-	),
-	//取得商户列表
-	'getSellerInfo'=>array(
-	   'file' => 'seller.php','class' => 'APISeller'
-	),
-	//取得VIP商户列表
-	'getVipSellerList'=>array(
-	    'query'=>array(
-	    	'name'  => 'seller',
-	    	'order' => ' sort asc ',
-	    	'limit' => 10,
-	    	'where' => 'is_del = 0 and is_vip = 1',
-	    )
-	),
-	//取得VIP商户列表
-	'getSellerList'=>array(
 	   'file' => 'seller.php','class' => 'APISeller'
 	),
 	//最新评论列表
@@ -349,6 +371,15 @@ return array(
 	    	'where'  => "  seller_id = #seller_id# AND is_del = 0",
 	    	'order'  => ' sort asc,id desc',
 	    	'limit'  => 10,
+	    )
+	),
+	//根据产品ID查商家
+	'getsellerid'=>array(
+	    'query'=>array(
+	    	'name'   => 'seller',
+	    	'fields' => 'id,true_name',
+	    	'where'  => " id = #seller_id#",
+	    	'limit'  => 1,
 	    )
 	),
 	//帮助中心列表

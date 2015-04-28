@@ -1,0 +1,316 @@
+
+{set:
+	$site_config=new Config('site_config');
+	$seo_data=array();
+	$seo_data['title']=$site_config->name;
+	$seo_data['title'].=$site_config->index_seo_title;
+	$seo_data['keywords']=$site_config->index_seo_keywords;
+	$seo_data['description']=$site_config->index_seo_description;
+	seo::set($seo_data);
+}
+
+<link rel="stylesheet" type="text/css" href="{theme:javascript/jquery.bxSlider/jquery.bxslider.css}" />
+<script type="text/javascript" src="{theme:javascript/jquery.bxSlider/jquery.bxSlider.min.js}"></script>
+
+<div class="layout_main">
+	<div class="laybox banner_slider clearfix" id="firstScreen">
+		<div id="middle_bann_img">
+			{if:$this->index_slide}
+			<ul>
+			{foreach:items=$this->index_slide}
+			<li title="{$item['name']}">
+				<a href="{url:$item[url]}" target="_blank" style="background:url({$site_config->url}{webroot:$item[img]}) no-repeat center top;"></a>
+			</li>
+			{/foreach}
+			</ul>
+			{/if}
+		</div>
+		
+		<div class="layout_col_b">
+			<div class="mod_exclusivity">
+				<h3>会员专享</h3>
+				<ol>
+					<li>
+						<a href=" " target="_blank">
+						<img src="{skin:images/ico1.jpg}" alt="">0元试用</a>
+					</li>
+					<li>
+						<a href="{url:/ucenter/index}" target="_blank">
+						<img src="{skin:images/ico2.jpg}" alt="">会员俱乐部</a>
+					</li>
+					<li>
+						<a href="{url:/ucenter/redpacket}" target="_blank">
+						<img src="{skin:images/ico3.jpg}" alt="">礼品卡</a>
+					</li>
+				</ol>
+			</div>
+			
+			<div class="mod_iframe">
+				<script type="text/javascript">
+					$(document).ready(function(){
+						cutover("mod_iframe",'1');
+					});
+				</script>
+				<div class="tabContainer">
+					<ul class="tabs">
+						<li class="tb1 on">话费快充</li>
+						<li class="tb2">公告列表</li>
+						<li class="tb3">新闻资讯</li>
+					</ul>
+				</div>
+				<div class="panelContainer">
+					<div class="content fpl1">
+					   <div class="app_mobile_money" id="appMobileMoney">
+						<p style="background:no-repeat" class="post_info">
+							
+						</p>
+						<form action="" method="post" target="_blank" id="lifeForm">
+						<label class="mb_txt">
+							手机号码：&nbsp;<input style="color: rgb(204, 204, 204);" maxlength="11" placeholder="请输入手机号码" value="" id="mbNum" name="mobileNo" autocomplete="off" type="text">
+							<div style="display: none;" class="big_num">
+								<p id="bigMobileNum"></p>
+							</div>
+						</label>
+						<div class="check_value">
+							<label>
+								<span>面值：&nbsp;</span>
+								<div class="more_value">
+									<strong id="moneyVal">100</strong><input maxlength="3" value="100" id="moneyNum" name="denomination" type="hidden">
+									<h4><a href="">选择面值</a></h4>
+									<p style="display: none;">
+									   <a href="javascript:void(0);"><b>¥10</b><i id="imgPirce10" style="display:none" class="icon_tuan"></i></a>
+										<a href="javascript:void(0);"><b>¥20</b><i id="imgPirce20" style="display:none" class="icon_tuan"></i></a>
+										<a href="javascript:void(0);"><b>¥30</b><i id="imgPirce30" style="display:none" class="icon_tuan"></i></a>
+										<a href="javascript:void(0);"><b>¥50</b><i id="imgPirce50" style="display:none" class="icon_tuan"></i></a>
+										<a href="javascript:void(0);"><b>¥100</b><i id="imgPirce100" style="display:none" class="icon_tuan"></i></a>
+										<a href="javascript:void(0);"><b>¥200</b><i id="imgPirce200" style="display:none" class="icon_tuan"></i></a>
+										<a href="javascript:void(0);"><b>¥300</b><i id="imgPirce300" style="display:none" class="icon_tuan"></i></a>
+										<a href="javascript:void(0);"><b>¥500</b><i id="imgPirce500" style="display:none" class="icon_tuan"></i></a>
+									</p>
+								</div>
+							</label>
+						</div>
+						<p class="price_pay">
+							售&nbsp;&nbsp;&nbsp;&nbsp;价：&nbsp;<strong>¥&nbsp;<span id="priceNum">98.6-99.8</span></strong>
+						</p>
+						<div class="btn_box">
+							<button type="submit" class="btn_submit" id="submit">立即充值</button>
+							<a id="mobile_advice" href=" " target="_blank" onclick="gotracker('2','yhd_static_iframe_ad',null);">赏花踏青正当时！</a>
+						</div>
+						</form>
+					</div>
+					</div>
+					
+					<div style="display:none;" class="content fpl2">
+					   <div class="app_mobile_money">
+							<ul>
+								{foreach:items=Api::run('getAnnouncementList',7)}
+								{set:$tmpId=$item['id'];}
+								<li><a href="{url:/site/notice_detail/id/$tmpId}">{$item['title']}</a></li>
+								{/foreach}
+							</ul>
+						</div>
+					</div>
+				
+					<div style="display:none;" class="content fpl2">
+					   <div class="app_mobile_money">
+							<ul>
+							{foreach:items=Api::run('getArtList',6)}
+							{set:$tmpas=$item['id'];}
+							<li>
+							<a href="{url:/site/article_detail/id/$tmpas}">{echo:Article::showTitle($item['title'],$item['color'],$item['style'])}</a>
+							</li>
+							{/foreach}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 推荐商品 -->
+	<div class="wrap mod_index_floor mod_tuangou_floor clearfix" id="floorGroup">
+		<div class="mod_floor_title tuangou">
+		<div>
+			<span class="bt">推荐商品</span>
+		</div>
+		<div class="keyword">
+			<a href="{url:/site/pro_list/cat/$first[id]}">更多 ></a>
+		</div>
+		</div>
+		<div class="a_con">
+			<ul class="tag clearfix">
+				{foreach:items=Api::run('getKeywordList',10)}
+				{set:$searchWord =urlencode($item['word']);}
+				<a href="{url:/site/search_list/word/$searchWord}">{$item['word']}</a>
+				{/foreach}
+			</ul>
+			<a class="pic" href=" ">
+				<img alt="" src="http://d8.yihaodianimg.com/N05/M00/B8/65/ChEbulTS4umAJo3YAABPTi-0Uxg99500.jpg">
+			</a>
+		</div> 
+		<div class="k_con">
+            {foreach:items=Api::run('getadmanageid',array('#position_id#','23'),2) item=$second}
+            <a href="{$second['link']}"><img src="{url:$second['content']}"></a>
+            {/foreach}
+		</div>
+		
+		{foreach:items=Api::run('getCommendRecom',6)}
+		<div class="c_con pro_con">
+			<a href="{url:/site/products/id/$item[id]}" title="{$item['name']}">
+				<img src="{url:/pic/thumb/img/$item[img]/w/120/h/120}" height="120" width="120">
+				<p class="p1">{$item['name']}</p>
+				<p class="p_box clearfix"><em><i>{$item['sale']}</i>人已购买</em>¥<b>{$item['sell_price']}</b>
+				<del>{$item['market_price']}</del></p>
+			</a>
+		</div>
+		{/foreach}
+	</div>
+	<!-- end -->
+	
+	<!-- 所有分类 -->
+	{foreach:items=Api::run('getCategoryListTop') item=$first }
+    {set:$tmpon++;}
+	<div class="wrap mod_index_floor clearfix" id="floorSx">
+		<div class="mod_floor_title shengxian">
+			<div>
+				<a class="bt" href="{url:/site/pro_list/cat/$first[id]}">{$tmpon}F / {$first['name']}</a>
+			</div>
+			<div class="keyword">
+			{foreach:items=Api::run('getCategoryByParentid',array('#parent_id#',$first['id']),6) item=$second}
+			<a href="{url:/site/pro_list/cat/$second[id]}">{$second['name']}</a>|
+			{/foreach}
+			<a href="{url:/site/pro_list/cat/$first[id]}">更多 ></a>
+			</div>
+		</div>
+		<div class="a_con">
+			<ul class="tag clearfix">
+				{foreach:items=Api::run('getCategoryByParentid',array('#parent_id#',$first['id']),6) item=$second}
+				<a href="{url:/site/pro_list/cat/$second[id]}" title="{$second['name']}">{$second['name']}</a>
+				{/foreach}
+			</ul>
+            {foreach:items=Api::run('getadid',array('#position_id#','25'),array('#desxc#',$tmpon)) item=$second}
+			<a class="pic" href="{$second['link']}"><img src="{url:$second['content']}" width="180" height="230"></a>
+			{/foreach}
+		</div>
+		<div class="b_con">
+			
+			<script type="text/javascript">
+				$(document).ready(function(){
+					roll_pic({$tmpon});
+				});
+			</script>
+			<div class="slider_index_ad" id="sxSliderIndexAd{$tmpon}">
+				<ul>
+                
+                <!-- 根据分类楼层调用广告 -->
+                {if:$tmpon > 10 }
+
+                {foreach:items=Api::run('getadmanageid',array('#position_id#',$tmpon)) item=$second}
+                <li><a href="{$second['link']}"><img src="{url:$second['content']}"></a></li>
+				{/foreach}
+                
+                {elseif:$tmpon == 10}
+                
+                {foreach:items=Api::run('getadmanageid',array('#position_id#','20')) item=$second}
+                <li><a href="{$second['link']}"><img src="{url:$second['content']}"></a></li>
+				{/foreach}
+                
+                {else:}
+                
+                {foreach:items=Api::run('getadmanageid',array('#position_id#','1'.$tmpon)) item=$second}
+                <li><a href="{$second['link']}"><img src="{url:$second['content']}"></a></li>
+				{/foreach}
+                
+                {/if}
+				</ul>
+			</div>
+		</div>
+				
+		{foreach:items=Api::run('getCategoryExtendList',array('#categroy_id#',$first['id']),6)}
+		<div class="c_con i_con pro_con">
+			<a href="{url:/site/products/id/$item[id]}" title="{$item['name']}">
+				<img src="{url:/pic/thumb/img/$item[img]/w/120/h/120}" height="120" width="120">
+				<p class="p1">{$item['name']}</p>
+				<p class="p_price">¥<b>{$item['sell_price']}</b></p>
+			</a>
+		</div>
+		{/foreach}
+	</div>
+	{/foreach}
+	<!-- end -->
+</div>
+
+<script type='text/javascript'>
+
+$('.hd_allsort_out').show();
+$('#allSortOuterbox').hover(function(){},
+	function(){
+		allsortLateCall.stop();
+		$('.hd_allsort_out').show();
+	}
+);
+
+//dom载入完毕执行
+jQuery(function()
+{
+	//幻灯片开启
+	$('.bxslider').bxSlider({'mode':'fade','captions':true,'pager':false,'auto':true});
+
+	//index 分类展示
+	$('#index_category tr').hover(
+		function(){
+			$(this).addClass('current');
+		},
+		function(){
+			$(this).removeClass('current');
+		}
+	);
+
+	//email订阅 事件绑定
+	var tmpObj = $('input:text[name="orderinfo"]');
+	var defaultText = tmpObj.val();
+	tmpObj.bind({
+		focus:function(){checkInput($(this),defaultText);},
+		blur :function(){checkInput($(this),defaultText);}
+	});
+
+	//显示抢购倒计时
+	var cd_timer = new countdown();
+	{if:isset($countNumsItem) && $countNumsItem}
+	{foreach:items = $countNumsItem}
+		cd_timer.add({$item});
+	{/foreach}
+	{/if}
+
+	//首页商品变色
+	var colorArray = ['green','yellow','purple'];
+	$('div[name="showGoods"]').each(function(i)
+	{
+		$(this).addClass(colorArray[i%colorArray.length]);
+	});
+});
+
+//电子邮件订阅
+function orderinfo()
+{
+	var email = $('[name="orderinfo"]').val();
+	if(email == '')
+	{
+		alert('请填写正确的email地址');
+	}
+	else
+	{
+		$.getJSON('{url:/site/email_registry}',{email:email},function(content){
+			if(content.isError == false)
+			{
+				alert('订阅成功');
+				$('[name="orderinfo"]').val('');
+			}
+			else
+				alert(content.message);
+		});
+	}
+}
+</script>

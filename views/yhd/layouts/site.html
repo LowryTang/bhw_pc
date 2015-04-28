@@ -1,0 +1,385 @@
+{set:
+	$myCartObj  = new Cart();
+	$myCartInfo = $myCartObj->getMyCart();
+	$siteConfig = new Config("site_config");
+	$callback   = IReq::get('callback') ? urlencode(IFilter::act(IReq::get('callback'),'url')) : '';
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{echo:$siteConfig->name}</title>
+<link type="image/x-icon" href="favicon.ico" rel="icon" />
+<link rel="stylesheet" href="{skin:css/index.css}" />
+<link rel="stylesheet" href="{skin:css/global_site_index_new.css}" />
+
+<link rel="stylesheet" type="text/css" href="{skin:css/global_site_simplify.css}" />
+<link rel="stylesheet" type="text/css" href="{skin:css/search_table2.css}" />
+
+<link rel="stylesheet" type="text/css" href="{skin:css/global_site_base.css}" />
+<link rel="stylesheet" type="text/css" href="{skin:css/style-detail.css}" />
+<link rel="stylesheet" type="text/css" href="{skin:css/point_icon_big.css}" />
+<link rel="stylesheet" type="text/css" href="{skin:css/product_detail_b_page.css}" />
+<link rel="stylesheet" type="text/css" href="{skin:css/style.css}" />
+	{js:jquery}
+	{js:form}
+	{js:validate}
+	{js:dialog}
+	{js:artTemplate}
+<script type='text/javascript' src="{theme:javascript/common.js}"></script>
+<script type="text/javascript" src="{theme:javascript/site.js}"></script>
+{set:$sonline = new Sonline();$sonline->show($siteConfig->phone,$siteConfig->service_online);}
+</head>
+
+<body class="w1200">
+<div class="hd_global_top_bar" id="global_top_bar">
+	<div class="wrap clearfix">
+		<div class="hd_topbar_left clearfix">
+			<div class="hd_unlogin_wrap" id="global_unlogin">
+				<div class="hd_login clearfix">
+					{if:$this->user}
+					<span class="hd_hi">Hi,
+					{echo:$this->user['username']}欢迎来到{echo:$siteConfig->name}购物！</span>
+					[<a href="{url:/simple/logout}" class="reg">安全退出</a>]
+					{else:}
+					<span class="hd_hi">Hi,</span>请
+					<a class="blue_link" href="{url:/simple/login?callback=$callback}" id="global_top_bar_loginLink">&nbsp;登录&nbsp;</a>/
+					<a class="blue_link" href="{url:/simple/reg?callback=$callback}">&nbsp;注册</a>
+					{/if}
+				</div>
+			</div>
+		</div>
+		<div class="hd_top_manu clearfix">
+			<ul class="clearfix">
+				<li class="hd_menu_tit" id="">
+					<a href="{url:/ucenter/index}" class="">我的账户 </a>
+				</li>
+				<li class="hd_menu_tit" id="mobie_list">
+					<a href=" " class="hd_menu"><i class="hd_mobile_icon"></i>手机商城</a>
+					<div class="hd_mobile_show">
+						<div class="hd_mobile_content">
+							<img src="http://d8.yihaodianimg.com/N01/M01/0D/7A/CgQCr1KW1juAFH9YAAAatCrcuRI48200.png" alt="客户端注册即送100元壕礼">
+						</div>
+					</div>
+				</li>
+				
+				<li class="hd_menu_tit" id="help_list">
+				<a href=" " class="hd_menu"><s class="khfw"></s>客户服务</a>
+				<div class="hd_menu_list">
+					<ul>
+						{foreach:items=Api::run('getHelpListByCatidAll',array('#cat_id#','5'))}
+							<li><a href="{url:/site/help/id/$item[id]}">{$item['name']}</a></li>
+						{/foreach}
+					</ul>
+				</div>
+				</li>
+				<li class="hd_menu_tit" id="">
+					<a href="{url:/site/help_list}">帮助中心</a>
+				</li>
+			</ul>
+			<span class="hd_follow_us">关注我们：</span>
+			<a id="weibo" href=" " class="hd_sina_weibo">关注1号店新浪微博</a>
+			<a class="hd_weixin hd_menu_tit" id="glWeiXin" href=" " target="_blank">
+				<i style="display:none;">&nbsp;</i>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="wrap hd_header clearfix" id="site_header">
+	<div id="logo_areaID" class="hd_logo_area fl clearfix">
+		<a href="{url:/site/index}" class="fl">
+			<img src="{skin:images/CgQCsFLVBOOAE0boAAAK5UNpfUI56300.png}">
+		</a>
+		<div class="logo_area_right fl">
+			<a href="{url:/site/index}" target="_blank" class="header_ad_n">
+				<img src="{skin:images/ChEbvFSb6eiAdCkSAAARM8pEdCs39700.jpg.png}">
+			</a>
+		</div>
+	</div>
+	<div class="hd_head_search">
+		<div class="hd_search_form clearfix">
+			<div class="searchbox">
+				<form method='get' action='{url:/}'>
+					<input type='hidden' name='controller' value='site' />
+					<input type='hidden' name='action' value='search_list' />
+					<input class="text" type="text" name='word' autocomplete="off" value="输入关键字..." />
+					<input class="btn" type="submit" value="搜索" onclick="checkInput('word','输入关键字...');" />
+				</form>
+				<ul class="auto_list" style='display:none'></ul>
+			</div>
+		</div>
+		<p id="hotKeywordsShow" class="hd_hot_search">
+			<em>关键词：</em>
+			{foreach:items=Api::run('getKeywordList',7)}
+			{set:$searchWord =urlencode($item['word']);}
+			<a href="{url:/site/search_list/word/$searchWord}">{$item['word']}</a>
+			{/foreach}
+			<a href="{url:/site/tags}">更多 ></a>
+		</p>
+	</div>
+	<div class="hd_prism_wrap" id="hdPrismWrap">
+		<div class="hd_prism hd_welfare" id="hdPrismCoupon">
+			<a href="{url:/ucenter/online_recharge}" class="hd_prism_tab"><em></em><p>充值</p><i></i></a>
+		</div>
+		<div class="hd_prism hd_order" id="hdPrismOrder">
+			<a href="{url:/ucenter/order}" class="hd_prism_tab"><em></em><p>订单查询</p><i></i></a>
+		</div>
+	</div>
+</div>
+
+<div id="headerNav" class="hd_header_nav has_bodyskin">
+	<div class="wrap clearfix">
+		<div id="allSortOuterbox">
+			<div class="hd_all_sort_link fl">
+				<a href="javascript:void(0);" class="fl" id="all">所有商品分类</a>
+			</div>
+			<div class="hd_allsort_out_box_new" id="allCategoryHeader">
+				<div class="hd_allsort_out" style="display:none;" id="hd_allsort_out">
+					<ul class="hd_allsort" id="j_allsort">
+						{foreach:items=Api::run('getCategoryListTop') item=$first}
+						<li class="hd_no_pic">
+							<h3 class="hd_gray_bg">
+							    <i class="hd_iconfont"></i>
+								<a href="{url:/site/pro_list/cat/$first[id]}">{$first['name']}</a>
+							</h3>
+							<div class="hd_show_sort" style='display:none'>
+								<div class="hd_sort_list_wrap clearfix">
+									{foreach:items=Api::run('getCategoryByParentid',array('#parent_id#',$first['id'])) item=$second}
+									<div class="hd_sort_list">
+										<dl class="clearfix">
+											<dt class="clearfix">
+										    	<a href="{url:/site/pro_list/cat/$second[id]}">{$second['name']}</a>
+											</dt>
+											{foreach:items=Api::run('getCategoryByParentid',array('#parent_id#',$second['id'])) item=$third}
+											<dd><a href="{url:/site/pro_list/cat/$third[id]}">{$third['name']}</a></dd>
+											{/foreach}
+										</dl>
+									</div>
+									{/foreach}
+								</div>
+							</div>
+						</li>
+						{/foreach}
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="headerNavWrap" id="global_menu">
+			<ul id="wideScreenTabShowID" class="headerNavMain clearfix">
+				<li class="cur"><a href="{url:/site/index}">首页</a></li>
+				{foreach:items=Api::run('getGuideList')}
+				<li><a href="{url:$item[link]}">{$item['name']}</a></li>
+				{/foreach}
+			</ul>
+		</div>
+		<div class="hd_mini_cart mycart">
+            <i></i>
+			<a class="hd_prism_cart" href="{url:/simple/cart}"><em name="mycart_count">{$myCartInfo['count']}</em><i></i>购物车</a>
+			<!--购物车浮动div 开始-->
+			<div class="shopping" id='div_mycart' style='display:none;'>
+			</div>
+			<!--购物车浮动div 结束-->
+
+			<!--购物车模板 开始-->
+			<script type='text/html' id='cartTemplete'>
+			<dl class="cartlist">
+				<%for(var item in goodsData){%>
+				<%var data = goodsData[item]%>
+				<dd id="site_cart_dd_<%=item%>">
+					<div class="pic f_l"><img width="55" height="55" src="{webroot:<%=data['img']%>}"></div>
+					<h3 class="title f_l"><a href="{url:/site/products/id/<%=data['goods_id']%>}"><%=data['name']%></a></h3>
+					<div class="price f_r t_r">
+						<b class="block">￥<%=data['sell_price']%> x <%=data['count']%></b>
+						<input class="del" type="button" value="删除" onclick="removeCart('{url:/simple/removeCart}','<%=data['id']%>','<%=data['type']%>');$('#site_cart_dd_<%=item%>').hide('slow');" />
+					</div>
+				</dd>
+				<%}%>
+
+				<dd class="static"><span>共<b name="mycart_count"><%=goodsCount%></b>件商品</span>金额总计：<b name="mycart_sum">￥<%=goodsSum%></b></dd>
+
+				<%if(goodsData){%>
+				<dd class="static">
+					{if:ISafe::get('user_id')}
+					<a class="f_l" href="javascript:void(0)" onclick="deposit_ajax('{url:/simple/deposit_cart_set}');">寄存购物车>></a>
+					{/if}
+					<label class="btn_orange"><input type="button" value="去购物车结算" onclick="window.location.href='{url:/simple/cart}';" /></label>
+				</dd>
+				<%}%>
+			</dl>
+			</script>
+			<!--购物车模板 结束-->
+		</div>
+		<div class="hd_mobile_wrap">
+			<a id="global_right_pic">
+				<i><img src="{skin:images/CgQCtlOQFNiAW5d-AAADZrmNo9M77800.jpg.bmp}"></i> 手机下单惊喜多！
+			</a>
+		</div>
+	</div>
+</div>
+
+<div class="new_body_ly">
+{viewcontent}
+</div>
+
+<div class="ft_service_link clearfix">
+	<div id="bottomHelpLinkId" class="ft_help_list clearfix">
+		<dl>
+			<dt>新手入门</dt>
+			{foreach:items=Api::run('getHelpListByCatidAll',array('#cat_id#','3'),5)}
+		  		<dd><a href="{url:/site/help/id/$item[id]}">{$item['name']}</a></dd>
+		  	{/foreach}		
+		</dl>
+		<dl>
+			<dt>配送服务</dt>
+			{foreach:items=Api::run('getHelpListByCatidAll',array('#cat_id#','6'),5)}
+			  <dd><a href="{url:/site/help/id/$item[id]}">{$item['name']}</a></dd>
+		  	{/foreach}
+		</dl>
+		<dl>
+			<dt>支付方式</dt>
+			{foreach:items=Api::run('getHelpListByCatidAll',array('#cat_id#','4'),5)}
+			  <dd><a href="{url:/site/help/id/$item[id]}">{$item['name']}</a></dd>
+		  	{/foreach}
+		</dl>
+		<dl>
+			<dt>售后服务</dt>
+			{foreach:items=Api::run('getHelpListByCatidAll',array('#cat_id#','5'),5)}
+			  <dd><a href="{url:/site/help/id/$item[id]}">{$item['name']}</a></dd>
+		  	{/foreach}
+		</dl>
+		<dl>
+			<dt>自助服务</dt>
+			{foreach:items=Api::run('getHelpListByCatidAll',array('#cat_id#','9'),5)}
+			  <dd><a href="{url:/site/help/id/$item[id]}">{$item['name']}</a></dd>
+		  	{/foreach}		
+		</dl>
+		<dl>
+			<dt>商家中心</dt>
+			{foreach:items=Api::run('getHelpListByCatidAll',array('#cat_id#','10'),5)}
+			  <dd><a href="{url:/site/help/id/$item[id]}">{$item['name']}</a></dd>
+		  	{/foreach}		
+		</dl>
+	</div>
+</div>
+<div id="footer">
+	<div class="ft_footer_service">
+		<a href="javascript:void(0);"><span class="s1"></span>全国包邮</a>
+		<a href="javascript:void(0);"><span class="s2"></span>正品保障</a>
+		<a href="javascript:void(0);"><span class="s3"></span>售后无忧</a>
+		<a href="javascript:void(0);"><span class="s4"></span>准时送达</a>
+	</div>
+	
+	<p class="ft_footer_link">
+		{foreach:items=Api::run('getHelpListByCatidAll',array('#cat_id#','8'))}
+		<a href="{url:/site/help/id/$item[id]}" target="_blank">{$item['name']}</a>|
+		{/foreach}
+	</p>
+	
+	<p>Copyright &copy;&nbsp;&nbsp;{echo:$siteConfig->name} 2007-2015 All Rights Reserved&nbsp;&nbsp;
+		<a href="javascript:void(0);" target="_blank">沪ICP备13044278号</a>
+	</p>
+	
+	<small class="ft_pic_link">
+		<a href="javascript:void(0);" target="_blank"><img src="{skin:images/ic1.png}"></a>
+		<a href="javascript:void(0);" target="_blank"><img src="{skin:images/ic2.jpg}"></a>
+		<a href="javascript:void(0);" target="_blank"><img src="{skin:images/ic3.jpg}"></a>
+		<a href="javascript:void(0);" target="_blank"><img src="{skin:images/ic4.jpg}"></a>
+		<a href="javascript:void(0);" target="_blank"><img src="{skin:images/ic5.jpg}"></a>
+	</small>
+</div>
+
+<div id="goTop">
+    <div id="top_box" class="goTopBtn"><a style="display: none;" href="javascript:void(0);" id="back_top"></a></div>
+    <div id="sc_wap"><a href="javascript:void(0);" title="手机扫描访问手机版"></a><em style="display: none;">&nbsp;</em></div>
+    <div id="sc_box"><a href="javascript:void(0);" title=" "></a><em style="display: none;">&nbsp;</em></div>
+</div>
+
+<!--选择货品添加购物车模板 开始-->
+<script type='text/html' id='selectProductTemplate'>
+<table width="100%">
+	<col />
+	<col width="80px" />
+	<col width="60px" />
+	<%for(var item in productData){%>
+	<%item = productData[item]%>
+	<tr>
+		<td align="left">
+			<%for(var spectName in item['specData']){%>
+			<%var spectValue = item['specData'][spectName]%>
+				<%=spectName%>：<%==spectValue%> &nbsp&nbsp
+			<%}%>
+		</td>
+		<td align="center"><span class="bold red2">￥<%=item['sell_price']%></span></td>
+		<td align="right"><label class="btn_gray_s"><input type="button" onclick="joinCart_ajax('<%=item['id']%>','product');" value="购买"></label></td>
+	</tr>
+	<%}%>
+	<tr>
+		<td colspan='3' align="left"><a href="{url:/site/products/id/<%=item['goods_id']%>}">查看更多</a></td>
+	</tr>
+</table>
+</script>
+<!--选择货品添加购物车模板 结束-->
+
+<script type='text/javascript'>
+$(function()
+{
+	{set:$word = IReq::get('word') ? IFilter::act(IReq::get('word'),'text') : '输入关键字...'}
+	$('input:text[name="word"]').val("{$word}");
+
+	$('input:text[name="word"]').bind({
+		keyup:function(){autoComplete('{url:/site/autoComplete}','{url:/site/search_list/word/@word@}','{$siteConfig->auto_finish}');}
+	});
+
+	var mycartLateCall = new lateCall(200,function(){showCart('{url:/simple/showCart}')});
+
+	//购物车div层
+	$('.mycart').hover(
+		function(){
+			mycartLateCall.start();
+		},
+		function(){
+			mycartLateCall.stop();
+			$('#div_mycart').hide('slow');
+		}
+	);
+});
+
+//[ajax]加入购物车
+function joinCart_ajax(id,type)
+{
+	$.getJSON("{url:/simple/joinCart}",{"goods_id":id,"type":type,"random":Math.random()},function(content){
+		if(content.isError == false)
+		{
+			var count = parseInt($('[name="mycart_count"]').html()) + 1;
+			$('[name="mycart_count"]').html(count);
+			$('.msgbox').hide();
+			alert(content.message);
+		}
+		else
+		{
+			alert(content.message);
+		}
+	});
+}
+
+//列表页加入购物车统一接口
+function joinCart_list(id)
+{
+	$.getJSON('{url:/simple/getProducts}',{"id":id},function(content){
+		if(!content)
+		{
+			joinCart_ajax(id,'goods');
+		}
+		else
+		{
+			var selectProductTemplate = template.render('selectProductTemplate',{'productData':content});
+			$('#product_box_'+id).html(selectProductTemplate);
+			$('#product_box_'+id).parent().show();
+		}
+	});
+}
+</script>
+
+</body>
+</html>
